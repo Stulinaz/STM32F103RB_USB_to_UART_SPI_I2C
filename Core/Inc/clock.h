@@ -3,8 +3,6 @@
 
 #include "main.h"
 
-#define EXTERNAL_16MHZ
-
 void SystemClock_Config(void);
 
 #endif

@@ -1,11 +1,12 @@
 #include "clock.h"
+#include "sys_definitions.h"
 
 #ifdef EXTERNAL_16MHZ
 /*External 16Mhz Crystal*/
 void SystemClock_Config(void)
 {
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
-  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  RCC_OscInitTypeDef RCC_OscInitStruct   = {0};
+  RCC_ClkInitTypeDef RCC_ClkInitStruct   = {0};
   RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 
   /** Initializes the RCC Oscillators according to the specified parameters

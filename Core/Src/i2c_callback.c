@@ -1,5 +1,5 @@
 #include"i2c_callback.h"
-#include "gpio.h"
+#include"gpio.h"
 
 /* I2C trasmitter mode at page 757 */
 /* I2C receiver   mode at page 761 */
@@ -13,6 +13,7 @@ uint32_t time_start;
 void MX_I2C1_Init(void)
 {
 	RCC->APB1ENR              |= RCC_APB1ENR_I2C1EN;
+	I2cPinConfig(COMMUNICATION_MODE);
 	hi2c1.Instance             = I2C1;
 	hi2c1.Init.ClockSpeed      = 80000;
 	hi2c1.Init.DutyCycle       = I2C_DUTYCYCLE_2;
@@ -23,7 +24,7 @@ void MX_I2C1_Init(void)
 	hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
 	hi2c1.Init.NoStretchMode   = I2C_NOSTRETCH_DISABLE;
     HAL_I2C_Init(&hi2c1);
-	I2cPinConfig();
+
 }
 
 void I2CHardReset(void)

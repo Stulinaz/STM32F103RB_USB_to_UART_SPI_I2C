@@ -74,7 +74,7 @@ Overview:			enables clock, configures pin and initialize UART
 void UartStart(void)
 {
 	RCC->APB1ENR |= 0x00020000;
-	SerialPinConfig();
+	SerialPinConfig(COMMUNICATION_MODE);
 	HAL_UART_Init(&huart2);
 	__HAL_UART_ENABLE_IT(&huart2,UART_IT_RXNE);
 	HAL_NVIC_EnableIRQ(USART2_IRQn);

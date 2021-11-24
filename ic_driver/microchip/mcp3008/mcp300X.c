@@ -1,5 +1,6 @@
 #include "stm32f1xx_hal.h"
 #include "spi.h"
+#include "gpio.h"
 #include "mcp300X.h"
 
 SPI_HandleTypeDef mcp300x_hspi;
@@ -25,7 +26,7 @@ static void Mcp300X_SPIInit(void)
 	mcp300x_hspi.Init.CRCCalculation    = SPI_CRCCALCULATION_DISABLE;
 	mcp300x_hspi.Init.CRCPolynomial     = 10;
 	/* Configure gpio*/
-	SpiPinConfig();
+	SpiPinConfig(COMMUNICATION_MODE);
 	HAL_GPIO_WritePin(SPI_PORT, SPI_NSS_PIN, GPIO_PIN_SET);
 	HAL_SPI_Init(&mcp300x_hspi);
 	SPI1->CR1 |= SPI_CR1_SPE;

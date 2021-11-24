@@ -183,31 +183,31 @@ static void I2cScanQueue(void)
 		switch(cmd)
 		{
 			case REPEAT_START:
-			UsbPrintString("Start / Repeat Start", TRUE);
+			UsbPrintString("Start / Repeat Start", APPEND_CR);
 			break;
 
 			case ADDRESS_TRANSFER:
 			if ( (byte & MASTER_RECEIVER) != 0 )
-				UsbPrintString("Read mode ", FALSE);
+				UsbPrintString("Read mode ", PRINT_ONLY);
 			else
-			UsbPrintString("Write mode ", FALSE);
+			UsbPrintString("Write mode ", PRINT_ONLY);
 			conversion = DecToChar(byte);
-			UsbPrintString("Addr: ", FALSE);
+			UsbPrintString("Addr: ", PRINT_ONLY);
 			putbyte(USB_INTERFACE, (uint8_t)(conversion >> 8));
 			putbyte(USB_INTERFACE, (uint8_t) conversion );
-			UsbPrintString("h ", TRUE);
+			UsbPrintString("h ", APPEND_CR);
 			break;
 
 			case BYTE_WRITE:
 			conversion = DecToChar(byte);
-			UsbPrintString("Byte write: ", FALSE);
+			UsbPrintString("Byte write: ", PRINT_ONLY);
 			putbyte(USB_INTERFACE, (uint8_t)(conversion >> 8));
 			putbyte(USB_INTERFACE, (uint8_t) conversion );
-			UsbPrintString("h ", TRUE);
+			UsbPrintString("h ", APPEND_CR);
 			break;
 
 			case BYTE_READ:
-			UsbPrintString("Byte Read", TRUE);
+			UsbPrintString("Byte Read", APPEND_CR);
 			break;
 			default:
 			break;
@@ -246,10 +246,10 @@ static void AppToTx(comm_inerface_t mode)
 			/* Error on I2C bus*/
 			#ifndef I2C_ERROR_VERBOSE
 			data = DecToChar(data);
-			UsbPrintString("Transfer Failure - error code:", FALSE);
+			UsbPrintString("Transfer Failure - error code:", PRINT_ONLY);
 			putbyte(USB_INTERFACE, (uint8_t)(data  >> 8));
 			putbyte(USB_INTERFACE, (uint8_t) data  );
-			UsbPrintString("h ", TRUE);
+			UsbPrintString("h ", APPEND_CR);
 			#else
 			//TODO verbose level i2c error
 			#endif
@@ -263,12 +263,12 @@ static void AppToTx(comm_inerface_t mode)
 				if(cmd == BYTE_READ)
 				{
 					data = DecToChar(byte);
-					UsbPrintString("Byte read: ", TRUE);
+					UsbPrintString("Byte read: ", APPEND_CR);
 					putbyte(USB_INTERFACE, (uint8_t)(data >> 8));
 					putbyte(USB_INTERFACE, (uint8_t) data );
 				}
 			}
-			UsbPrintString("Transfer Success", TRUE);
+			UsbPrintString("Transfer Success", APPEND_CR);
 		}
 		break;
 
@@ -277,7 +277,6 @@ static void AppToTx(comm_inerface_t mode)
 		if(data)
 		{
 			/* Start transfer in polling mode*/
-			// TODO ERRORI?
 			SpiSend();
 		}
 		break;

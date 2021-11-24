@@ -16,6 +16,7 @@ void SYS_Init(void)
 	SystemClock_Config();
 	GPIO_Init();
 	MX_USB_DEVICE_Init();
+	UsbEnable();
 	SPIInitDefault();
 	UartInitDefault();
 }

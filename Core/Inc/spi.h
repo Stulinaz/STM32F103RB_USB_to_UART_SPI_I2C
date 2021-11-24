@@ -43,6 +43,5 @@ SpiConf_t SpiUserConf(command_t spi_cmd, uint8_t param);
 void SPIInitDefault(void);
 void SPIStart(void);
 SpiError_t SpiSend(void);
-void SpiPinConfig(void);
 
 #endif

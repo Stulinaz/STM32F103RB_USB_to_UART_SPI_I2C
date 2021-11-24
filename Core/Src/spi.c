@@ -103,7 +103,7 @@ void SPIStart(void)
 	/* Enable clock */
 	RCC->APB2ENR |= 0x00001000;
 	/* Configure gpio*/
-	SpiPinConfig();
+	SpiPinConfig(COMMUNICATION_MODE);
 	if(spi_nss_mode == SPI_NSS_ACTIVE_LOW)
 		HAL_GPIO_WritePin(SPI_PORT, SPI_NSS_PIN, GPIO_PIN_SET);
 	else

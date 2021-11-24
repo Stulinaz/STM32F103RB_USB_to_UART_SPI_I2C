@@ -80,6 +80,8 @@ void Error_Handler(void);
 #define ERROR_LED_GPIO_Port GPIOC
 #define TIMEOUT_LED_Pin GPIO_PIN_9
 #define TIMEOUT_LED_GPIO_Port GPIOC
+#define USB_ENABLE_Pin GPIO_PIN_10
+#define USB_ENABLE_GPIO_Port GPIOA
 #define DRIVER_CH1_Pin GPIO_PIN_10
 #define DRIVER_CH1_GPIO_Port GPIOC
 #define DRIVER_CH2_Pin GPIO_PIN_11
@@ -90,6 +92,9 @@ void   MX_SPI1_Init(void);
 void   MX_USART2_UART_Init(void);
 void   MX_ADC1_Init(void);
 /* USER CODE BEGIN Private defines */
+#define UART_PORT GPIOA
+#define UART_TX_PIN GPIO_PIN_2
+#define UART_RX_PIN GPIO_PIN_3
 #define SPI_PORT GPIOA
 #define SPI_NSS_PIN GPIO_PIN_4
 #define SPI_MISO_PIN GPIO_PIN_6
