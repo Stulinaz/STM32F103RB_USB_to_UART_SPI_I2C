@@ -15,24 +15,24 @@ DEVELIPMENT IDE: STM32CubeIDE Version: 1.6.0
 TOOLCHAIN: GNU Tools for STM32 (9-2020-q2-update)
 
 TOP OF PCB:
-![Test Image 1](https://github.com/Stulinaz/STM32F103RB_USB_to_UART-SPI-I2C-/blob/master/PHOTOS/IMG4_TOP.JPG)
+![Test Image 1](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/PHOTOS/IMG4_TOP.JPG)
 
 BOTTOM OF PCB:
-![Test Image 2](https://github.com/Stulinaz/STM32F103RB_USB_to_UART-SPI-I2C-/blob/master/PHOTOS/IMG1_BOT.JPG)
+![Test Image 2](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/PHOTOS/IMG1_BOT.JPG)
 
 FEATURES:
 
 SWD INTERFACE
 
-![Test Image 3](https://github.com/Stulinaz/STM32F103RB_USB_to_UART-SPI-I2C-/blob/master/PHOTOS/IMG3_SWD.JPG)
+![Test Image 3](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/PHOTOS/IMG3_SWD.JPG)
 
 MINI USB WITH ESD PROTECTION:
 
-![Test Image 4](https://github.com/Stulinaz/STM32F103RB_USB_to_UART-SPI-I2C-/blob/master/PHOTOS/IMG5_USB.JPG)
+![Test Image 4](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/PHOTOS/IMG5_USB.JPG)
 
 POWER MOSFET
 
-![Test Image 5](https://github.com/Stulinaz/STM32F103RB_USB_to_UART-SPI-I2C-/blob/master/PHOTOS/IMG2_MOS.JPG)
+![Test Image 5](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/PHOTOS/IMG2_MOS.JPG)
 
 
 
