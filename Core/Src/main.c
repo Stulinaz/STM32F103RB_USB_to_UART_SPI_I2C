@@ -27,6 +27,7 @@
 #include "usb_device.h"
 #include "app.h"
 #include "sys_init.h"
+#include "temp_sensor_internal.h"
 
 /* USER CODE END Includes */
 

@@ -12,6 +12,7 @@ typedef enum{
 	USER_CH1_DEACTIVATE,
 	USER_CH2_ACTIVATED,
 	USER_CH2_DEACTIVATE,
+	USER_TEST_ONBOARD_LED,
 	USER_SER_SET_BAUDRATE,
 	USER_SPI_CLK_POLARITY_LOW,
 	USER_SPI_CLK_POLARITY_HIGH,
@@ -30,10 +31,6 @@ typedef enum{
 	HELP
 }command_t;
 
-extern const char general_command[];
-extern const char spi_command    [];
-extern const char i2c_command    [];
-extern const char ser_command    [];
 extern const char serial_cmd_select[];
 extern const char i2c_cmd_select[];
 extern const char spi_cmd_select[];
@@ -42,6 +39,7 @@ extern const char ch1_on[];
 extern const char ch1_off[];
 extern const char ch2_on[];
 extern const char ch2_off[];
+extern const char test_led[];
 extern const char serial_bausel[];
 extern const char spi_clkpollow[];
 extern const char spi_clkpolhigh[];

@@ -61,6 +61,9 @@ command_t Decode(uint16_t cmd_len, uint8_t *const param)
 	if(memcmp(buff, ch2_off, strlen(ch2_off)) == 0)
 		return USER_CH2_DEACTIVATE;
 
+	if(memcmp(buff, test_led, strlen(test_led)) == 0)
+		return USER_TEST_ONBOARD_LED;
+
 	/* serial */
     if(memcmp(buff, serial_bausel, strlen(serial_bausel)) == 0)
 	{

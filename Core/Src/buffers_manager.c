@@ -120,6 +120,7 @@ void USB_set_rx_data_len(uint16_t len)
 
 void UsbPrintString(const char *buff, append_t character)
 {
+	//TODO usb_comm_type.tx_buff_write_index e' sempre 0
 	if(usb_comm_type.tx_buff_write_index == 0)
 	{
 		putbyte(USB_INTERFACE, '[');

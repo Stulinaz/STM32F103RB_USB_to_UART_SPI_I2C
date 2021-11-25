@@ -20,10 +20,10 @@ static void LedErrorManager(void);
 static void CommunicationLedSetTime(void);
 
 static led_error_manager display_error = {0, 0, 0, ERR_NO_ERROR};
-static comm_inerface_t visualize_trasnfer = USB_INTERFACE;
-
-uint32_t tx_led_countdown = 0;
-uint32_t rx_led_countdown = 0;
+static comm_inerface_t visualize_transfer = USB_INTERFACE;
+static _bool TXRXLedEnable = TRUE;
+static uint32_t tx_led_countdown = 0;
+static uint32_t rx_led_countdown = 0;
 
 /****************************************************************************
 Function:			LedManager
@@ -47,7 +47,7 @@ Overview:
 ****************************************************************************/
 void USBStatusLed(GPIO_PinState status)
 {
-	 HAL_GPIO_WritePin(GPIOB, USB_LED_Pin,  status);
+	 HAL_GPIO_WritePin(USB_LED_GPIO_Port, USB_LED_Pin,  status);
 }
 
 /****************************************************************************
@@ -63,7 +63,7 @@ void LedInterfaceSel(command_t cmd)
 	{
 		case USER_SERIAL_INTERFACE_SELECTED:
 		{
-			visualize_trasnfer = SER_INTERFACE;
+			visualize_transfer = SER_INTERFACE;
 			HAL_GPIO_WritePin(SERIAL_LED_GPIO_Port, SERIAL_LED_Pin, GPIO_PIN_SET);
 			HAL_GPIO_WritePin(I2C_LED_GPIO_Port, I2C_LED_Pin, GPIO_PIN_RESET);
 			HAL_GPIO_WritePin(SPI_LED_GPIO_Port, SPI_LED_Pin, GPIO_PIN_RESET);
@@ -71,7 +71,7 @@ void LedInterfaceSel(command_t cmd)
 		}
 		case USER_I2C_INTERFACE_SELECTED:
 		{
-			visualize_trasnfer = I2C_INTERFACE;
+			visualize_transfer = I2C_INTERFACE;
 			HAL_GPIO_WritePin(SERIAL_LED_GPIO_Port, SERIAL_LED_Pin, GPIO_PIN_RESET);
 			HAL_GPIO_WritePin(I2C_LED_GPIO_Port, I2C_LED_Pin, GPIO_PIN_SET);
 			HAL_GPIO_WritePin(SPI_LED_GPIO_Port, SPI_LED_Pin, GPIO_PIN_RESET);
@@ -79,7 +79,7 @@ void LedInterfaceSel(command_t cmd)
 		}
 		case USER_SPI_INTERFACE_SELECTED:
 		{
-			visualize_trasnfer = SPI_INTERFACE;
+			visualize_transfer = SPI_INTERFACE;
 			HAL_GPIO_WritePin(SERIAL_LED_GPIO_Port, SERIAL_LED_Pin, GPIO_PIN_RESET);
 			HAL_GPIO_WritePin(I2C_LED_GPIO_Port, I2C_LED_Pin, GPIO_PIN_RESET);
 			HAL_GPIO_WritePin(SPI_LED_GPIO_Port, SPI_LED_Pin, GPIO_PIN_SET);
@@ -99,18 +99,18 @@ Overview:			Visualize on-goin transfer on selected interface (SPI - UART - I2C)
 ****************************************************************************/
 static void CommunicationLedSetTime(void)
 {
-	switch(visualize_trasnfer)
+	switch(visualize_transfer)
 	{
 		case SER_INTERFACE:
-		case I2C_INTERFACE:
 		case SPI_INTERFACE:
 		{
-			if (data_avail(visualize_trasnfer) != 0)
+			if (data_avail(visualize_transfer) != 0)
 				tx_led_countdown = TX_LED_ON_TIME;
-			if (data_toprocess(visualize_trasnfer) != 0)
+			if (data_toprocess(visualize_transfer) != 0)
 				tx_led_countdown = RX_LED_ON_TIME;
 		}
 		break;
+		case I2C_INTERFACE:
 		default:
 			break;
 	}
@@ -125,6 +125,8 @@ Overview:			Visualize on-goin transfer on selected interface (SPI - UART - I2C)
 ****************************************************************************/
 void CommunicationLedVisualize(void)
 {
+	if(!TXRXLedEnable)
+		return;
 	if ( (tx_led_countdown == 0) && (tx_led_countdown == 0) )
 	{
 		HAL_GPIO_WritePin(TX_LED_GPIO_Port, TX_LED_Pin, GPIO_PIN_RESET);
@@ -216,4 +218,42 @@ static void LedErrorManager(void)
 		}
 		break;
 	}
+}
+
+/****************************************************************************
+Function:			void LedTest(uint32_t time)
+Input:				time to hold on all the onboard leds
+Output:				none
+PreCondition:		none
+Overview:			Test onboard led after pcb mounting phase
+****************************************************************************/
+void LedTest(uint32_t time)
+{
+	TXRXLedEnable = FALSE;
+	HAL_GPIO_WritePin(USB_ENABLE_GPIO_Port,   USB_ENABLE_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(SERIAL_LED_GPIO_Port,   SERIAL_LED_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(SPI_LED_GPIO_Port,         SPI_LED_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(I2C_LED_GPIO_Port,         I2C_LED_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(STANDBY_LED_GPIO_Port, STANDBY_LED_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(USB_LED_GPIO_Port,         USB_LED_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(TX_LED_GPIO_Port,           TX_LED_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(RX_LED_GPIO_Port,           RX_LED_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(ERROR_LED_GPIO_Port,     ERROR_LED_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(TIMEOUT_LED_GPIO_Port, TIMEOUT_LED_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(DRIVER_CH1_GPIO_Port,   DRIVER_CH1_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(DRIVER_CH2_GPIO_Port,   DRIVER_CH2_Pin, GPIO_PIN_SET);
+	HAL_Delay(time);
+	HAL_GPIO_WritePin(USB_ENABLE_GPIO_Port,   USB_ENABLE_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(SERIAL_LED_GPIO_Port,   SERIAL_LED_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(SPI_LED_GPIO_Port,         SPI_LED_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(I2C_LED_GPIO_Port,         I2C_LED_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(STANDBY_LED_GPIO_Port, STANDBY_LED_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(USB_LED_GPIO_Port,         USB_LED_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(TX_LED_GPIO_Port,           TX_LED_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(RX_LED_GPIO_Port,           RX_LED_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(ERROR_LED_GPIO_Port,     ERROR_LED_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(TIMEOUT_LED_GPIO_Port, TIMEOUT_LED_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(DRIVER_CH1_GPIO_Port,   DRIVER_CH1_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(DRIVER_CH2_GPIO_Port,   DRIVER_CH2_Pin, GPIO_PIN_RESET);
+	TXRXLedEnable = TRUE;
 }

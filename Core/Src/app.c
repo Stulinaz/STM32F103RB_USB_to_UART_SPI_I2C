@@ -159,6 +159,10 @@ void Application (command_t * user_cmd, uint8_t * const user_data)
 		PrintHelp();
 		break;
 
+		case USER_TEST_ONBOARD_LED:
+		LedTest(10000);
+		break;
+
 		default:
 			break;
 	}
@@ -312,6 +316,15 @@ Overview:			Print a help string to the User on Virtual Com Port
 static void PrintHelp(void)
 {
 	/*general command + options*/
+	UsbPrintString(serial_cmd_select, PRINT_ONLY);
+	UsbPrintString( " :serial interface ON", APPEND_CR);
+
+	UsbPrintString(spi_cmd_select, PRINT_ONLY);
+	UsbPrintString( " :spi interface ON", APPEND_CR);
+
+	UsbPrintString(i2c_cmd_select, PRINT_ONLY);
+	UsbPrintString( " :i2c interface ON", APPEND_CRCR);
+
 	UsbPrintString(ch1_on, PRINT_ONLY);
 	UsbPrintString( " :CH1 ON", APPEND_CR);
 
@@ -324,14 +337,8 @@ static void PrintHelp(void)
 	UsbPrintString(ch2_off, PRINT_ONLY);
 	UsbPrintString( " :CH2 OFF", APPEND_CR);
 
-	UsbPrintString(serial_cmd_select, PRINT_ONLY);
-	UsbPrintString( " :serial interface ON", APPEND_CR);
-
-	UsbPrintString(spi_cmd_select, PRINT_ONLY);
-	UsbPrintString( " :spi interface ON", APPEND_CR);
-
-	UsbPrintString(i2c_cmd_select, PRINT_ONLY);
-	UsbPrintString( " :i2c interface ON", APPEND_CRCR);
+	UsbPrintString(test_led, PRINT_ONLY);
+	UsbPrintString( "Turn on all onboard leds", APPEND_CR);
 
 	/*serial command + options*/
 	UsbPrintString(serial_bausel, PRINT_ONLY);
@@ -379,5 +386,5 @@ static void PrintHelp(void)
 	UsbPrintString(" :start i2c transfer", APPEND_CRCR);
 
 	/* End string*/
-	UsbPrintString("STM32F103RB", APPEND_CR);
+	UsbPrintString("STM32F103RBT6", APPEND_CR);
 }

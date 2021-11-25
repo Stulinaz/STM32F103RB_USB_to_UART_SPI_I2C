@@ -14,4 +14,6 @@ void USBStatusLed(GPIO_PinState status);
 void LedInterfaceSel(command_t cmd);
 void ErrorCodeSet(uint8_t err_num);
 void CommunicationLedVisualize(void);
+void LedTest(uint32_t time);
+
 #endif
