@@ -3416,7 +3416,7 @@
   (via (at 180.96 69.652) (size 0.8) (drill 0.4) (layers F.Cu B.Cu) (net 2))
   (via (at 184.516 73.462) (size 0.8) (drill 0.4) (layers F.Cu B.Cu) (net 2))
   (via (at 180.96 77.018) (size 0.8) (drill 0.4) (layers F.Cu B.Cu) (net 2))
-  (via (at 168 92) (size 0.8) (drill 0.4) (layers F.Cu B.Cu) (net 2))
+  (via (at 167.752 92) (size 0.8) (drill 0.4) (layers F.Cu B.Cu) (net 2))
   (via (at 159.878 108.006) (size 0.8) (drill 0.4) (layers F.Cu B.Cu) (net 2))
   (via (at 172.07 99.116) (size 0.8) (drill 0.4) (layers F.Cu B.Cu) (net 2))
   (via (at 163.688 87.432) (size 0.8) (drill 0.4) (layers F.Cu B.Cu) (net 2))

@@ -132,16 +132,16 @@ Wire Wire Line
 	9250 1350 9000 1350
 Wire Wire Line
 	9250 1450 9000 1450
-Text GLabel 10400 3550 2    50   Input ~ 0
+Text GLabel 9100 3550 2    50   Input ~ 0
 I2C_SDA_PB7_PIN59
-Text GLabel 10400 3450 2    50   Input ~ 0
+Text GLabel 9100 3450 2    50   Input ~ 0
 I2C_SCL_PB6_PIN58
 $Comp
 L Regulator_Linear:MCP1703A-1202_SOT223 U1
 U 1 1 60504627
 P 2600 3450
 F 0 "U1" H 2600 3601 50  0000 C CNN
-F 1 "MCP1703A-1202_SOT223" H 2600 3601 50  0001 C CNN
+F 1 "MIC39100-3.3WS" H 2600 3700 50  0000 C CNN
 F 2 "Package_TO_SOT_SMD:SOT-223-3_TabPin2" H 2600 3650 50  0001 C CNN
 F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/20005122B.pdf" H 2600 3400 50  0001 C CNN
 	1    2600 3450
@@ -769,9 +769,9 @@ Text GLabel 2200 4600 2    50   Input ~ 0
 UART2_TX_PA2_PIN16
 Text GLabel 2200 4700 2    50   Input ~ 0
 UART2_RX_PA3_PIN17
-Text GLabel 2150 4400 2    50   Input ~ 0
+Text GLabel 2200 4400 2    50   Input ~ 0
 UART2_CTS_PA0_PIN14
-Text GLabel 2150 4500 2    50   Input ~ 0
+Text GLabel 2200 4500 2    50   Input ~ 0
 UART2_RTS_PA1_PIN15
 Wire Wire Line
 	1800 3350 1800 3450
@@ -967,9 +967,9 @@ F 3 "~" H 2250 5700 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 Wire Wire Line
-	10400 3450 9000 3450
+	9100 3450 9000 3450
 Wire Wire Line
-	9000 3550 10400 3550
+	9000 3550 9100 3550
 Text GLabel 8700 6400 2    50   Input ~ 0
 I2C_SDA_PB7_PIN59
 Text GLabel 8700 6300 2    50   Input ~ 0
@@ -1205,9 +1205,9 @@ Wire Wire Line
 Wire Wire Line
 	2100 4700 2200 4700
 Wire Wire Line
-	2100 4400 2150 4400
+	2100 4400 2200 4400
 Wire Wire Line
-	2100 4500 2150 4500
+	2100 4500 2200 4500
 Wire Wire Line
 	3200 3350 3200 3450
 $Comp
@@ -1743,11 +1743,11 @@ Wire Wire Line
 Wire Wire Line
 	6050 2400 6150 2400
 $Comp
-L Device:Crystal_GND24 48Mhz1
+L Device:Crystal_GND24 Y2
 U 1 1 604D9F9D
 P 6350 2400
-F 0 "48Mhz1" V 6150 2700 50  0000 L CNN
-F 1 "Crystal_GND24" V 6050 2700 50  0000 L CNN
+F 0 "Y2" V 6350 2350 50  0000 L CNN
+F 1 "Crystal_GND24" V 6050 2700 50  0001 L CNN
 F 2 "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm" H 6350 2400 50  0001 C CNN
 F 3 "~" H 6350 2400 50  0001 C CNN
 	1    6350 2400
@@ -1757,10 +1757,10 @@ Wire Wire Line
 	5800 2550 6350 2550
 Connection ~ 6350 2250
 $Comp
-L Device:Crystal Y2
+L Device:Crystal Y1
 U 1 1 60507E51
 P 10600 6000
-F 0 "Y2" V 10554 6131 50  0000 L CNN
+F 0 "Y1" V 10554 6131 50  0000 L CNN
 F 1 "Crystal" V 10645 6131 50  0000 L CNN
 F 2 "Crystal:Crystal_SMD_TXC_9HT11-2Pin_2.0x1.2mm_HandSoldering" H 10600 6000 50  0001 C CNN
 F 3 "~" H 10600 6000 50  0001 C CNN
@@ -1873,4 +1873,8 @@ Wire Wire Line
 Connection ~ 9950 2350
 Wire Wire Line
 	9950 2350 10300 2350
+Text Notes 1850 4300 0    50   ~ 0
+R12,R13,R14,R15 100R
+Text Notes 1900 5500 0    50   ~ 0
+R8,R9,R10,R11 100R
 $EndSCHEMATC
