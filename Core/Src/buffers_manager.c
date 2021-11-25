@@ -25,34 +25,29 @@ static void interface_selection (volatile comm_inerface_t type_t)
 {
 	switch(type_t)
 	{
-		case SER_INTERFACE:
-		{
-			idx_strct_ptr = &ser_comm_type;
-			buff_tx_ptr   = ser_tx_buff;
-			buff_rx_ptr   = ser_rx_buff;
-			break;
-		}
-		case I2C_INTERFACE:
-		{
-			idx_strct_ptr = &i2c_comm_type;
-			buff_tx_ptr   = i2c_tx_buff;
-			buff_rx_ptr   = i2c_rx_buff;
-			break;
-		}
-		case SPI_INTERFACE:
-		{
-			idx_strct_ptr = &spi_comm_type;
-			buff_tx_ptr   = spi_tx_buff;
-			buff_rx_ptr   = spi_rx_buff;
-			break;
-		}
-		case USB_INTERFACE:
-		{
-			idx_strct_ptr = &usb_comm_type;
-			buff_tx_ptr   = UserTxBufferFS;
-			buff_rx_ptr   = UserRxBufferFS;
-			break;
-		}
+		case UART:
+		idx_strct_ptr = &ser_comm_type;
+		buff_tx_ptr   = ser_tx_buff;
+		buff_rx_ptr   = ser_rx_buff;
+		break;
+
+		case I2C:
+		idx_strct_ptr = &i2c_comm_type;
+		buff_tx_ptr   = i2c_tx_buff;
+		buff_rx_ptr   = i2c_rx_buff;
+		break;
+
+		case SPI:
+		idx_strct_ptr = &spi_comm_type;
+		buff_tx_ptr   = spi_tx_buff;
+		buff_rx_ptr   = spi_rx_buff;
+		break;
+
+		case USBVCP:
+		idx_strct_ptr = &usb_comm_type;
+		buff_tx_ptr   = UserTxBufferFS;
+		buff_rx_ptr   = UserRxBufferFS;
+		break;
 		default:
 			break;
 	}
@@ -83,7 +78,7 @@ uint8_t getbyte(comm_inerface_t comm_type, uint8_t * const data)
 		idx_strct_ptr->rx_buff_read_index++;
 		if (idx_strct_ptr->rx_buff_read_index >= idx_strct_ptr->rx_buff_write_index)
 		{
-			if(comm_type != USB_INTERFACE)
+			if(comm_type != USBVCP)
 			{
 				idx_strct_ptr->rx_buff_write_index = 0;
 				idx_strct_ptr->rx_buff_read_index  = 0;
@@ -110,52 +105,44 @@ void clear_buff(comm_inerface_t comm_type)
 	interface_selection (comm_type);
 	idx_strct_ptr->rx_buff_write_index = 0;
 	idx_strct_ptr->rx_buff_read_index  = 0;
+	idx_strct_ptr->tx_buff_write_index = 0;
+	idx_strct_ptr->tx_buff_read_index  = 0;
 }
 
 void USB_set_rx_data_len(uint16_t len)
 {
-	interface_selection (USB_INTERFACE);
+	interface_selection (USBVCP);
 	idx_strct_ptr->rx_buff_write_index = len;
 }
 
 void UsbPrintString(const char *buff, append_t character)
 {
-	//TODO usb_comm_type.tx_buff_write_index e' sempre 0
-	if(usb_comm_type.tx_buff_write_index == 0)
-	{
-		putbyte(USB_INTERFACE, '[');
-		putbyte(USB_INTERFACE, 'S');
-		putbyte(USB_INTERFACE, 'T');
-		putbyte(USB_INTERFACE, 'M');
-		putbyte(USB_INTERFACE, ']');
-		putbyte(USB_INTERFACE, ' ');
-	}
 	while(*buff != '\0')
 	{
-		putbyte(USB_INTERFACE, *buff);
+		putbyte(USBVCP, *buff);
 		buff++;
 	}
 	switch(character)
 	{
 		case APPEND_CR:
-		putbyte(USB_INTERFACE, CR_);
+		putbyte(USBVCP, CR_);
 		break;
 
 		case APPEND_CRCR:
-		putbyte(USB_INTERFACE, CR_);
-		putbyte(USB_INTERFACE, CR_);
+		putbyte(USBVCP, CR_);
+		putbyte(USBVCP, CR_);
 		case PRINT_ONLY:
 		default:
 		break;
 	}
 	CDC_Transmit_FS(UserTxBufferFS, usb_comm_type.tx_buff_write_index);
-	usb_comm_type.tx_buff_write_index = 0;
+	idx_strct_ptr->tx_buff_write_index = 0;
 }
 
 uint16_t SetBuffer(comm_inerface_t comm_type)
 {
 	uint16_t data_len, i;
-	data_len = data_avail(USB_INTERFACE);
+	data_len = data_avail(USBVCP);
 	if(data_len)
 	{
 		for(i=0; i<data_len; i++)
@@ -170,8 +157,8 @@ void ToUsb(comm_inerface_t comm_type)
 	if( data_avail(comm_type) )
 	{
 		while( getbyte(comm_type, &byte) )
-			putbyte(USB_INTERFACE, byte);
+			putbyte(USBVCP, byte);
 		CDC_Transmit_FS(UserTxBufferFS, usb_comm_type.tx_buff_write_index);
-		usb_comm_type.tx_buff_write_index = 0;
+		idx_strct_ptr->tx_buff_write_index = 0;
 	}
 }

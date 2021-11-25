@@ -22,13 +22,11 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "command_manager.h"
 #include "led_manager.h"
 #include "usb_device.h"
-#include "app.h"
 #include "sys_init.h"
-#include "temp_sensor_internal.h"
-
+#include "app_usb.h"
+#include "app.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/

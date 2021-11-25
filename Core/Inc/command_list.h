@@ -13,6 +13,7 @@ typedef enum{
 	USER_CH2_ACTIVATED,
 	USER_CH2_DEACTIVATE,
 	USER_TEST_ONBOARD_LED,
+	USER_CLOSE_INTERFACE,
 	USER_SER_SET_BAUDRATE,
 	USER_SPI_CLK_POLARITY_LOW,
 	USER_SPI_CLK_POLARITY_HIGH,
@@ -40,6 +41,7 @@ extern const char ch1_off[];
 extern const char ch2_on[];
 extern const char ch2_off[];
 extern const char test_led[];
+extern const char close_interface[];
 extern const char serial_bausel[];
 extern const char spi_clkpollow[];
 extern const char spi_clkpolhigh[];

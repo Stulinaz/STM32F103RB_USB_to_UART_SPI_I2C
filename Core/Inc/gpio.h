@@ -15,4 +15,6 @@ void I2cPinConfig(DataPInConfig_t mode);
 void I2cSdaRelease(void);
 void SpiPinConfig(DataPInConfig_t mode);
 void UsbEnable(void);
+void UsbDisable(void);
+
 #endif

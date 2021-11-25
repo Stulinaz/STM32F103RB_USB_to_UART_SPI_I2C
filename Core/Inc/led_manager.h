@@ -2,6 +2,7 @@
 #define INC_LED_MANAGER_H_
 
 #include "main.h"
+#include "buffers_manager.h"
 #include "command_process.h"
 
 #define TX_LED_ON_TIME       (uint32_t) 180
@@ -11,7 +12,7 @@
 
 void LedManager(void);
 void USBStatusLed(GPIO_PinState status);
-void LedInterfaceSel(command_t cmd);
+void LedInterfaceSel(comm_inerface_t type);
 void ErrorCodeSet(uint8_t err_num);
 void CommunicationLedVisualize(void);
 void LedTest(uint32_t time);

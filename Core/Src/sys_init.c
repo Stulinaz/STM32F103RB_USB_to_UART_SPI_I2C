@@ -3,6 +3,7 @@
 #include "spi.h"
 #include "serial.h"
 #include "usb_device.h"
+#include "tim4_1us_tick.h"
 
 /****************************************************************************
 Function:			void SYS_Init(void)
@@ -19,4 +20,5 @@ void SYS_Init(void)
 	UsbEnable();
 	SPIInitDefault();
 	UartInitDefault();
+	TIM4Init_us();
 }

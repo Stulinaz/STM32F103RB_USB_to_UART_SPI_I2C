@@ -1,6 +1,7 @@
 #include "spi.h"
 #include "gpio.h"
 #include "buffers_manager.h"
+#include "tim4_1us_tick.h"
 
 SPI_HandleTypeDef hspi1;
 SpiNss_t spi_nss_mode;
@@ -102,6 +103,10 @@ void SPIStart(void)
 {
 	/* Enable clock */
 	RCC->APB2ENR |= 0x00001000;
+	spi_comm_type.tx_buff_write_index = 0;
+	spi_comm_type.tx_buff_read_index  = 0;
+	spi_comm_type.rx_buff_write_index = 0;
+	spi_comm_type.rx_buff_read_index  = 0;
 	/* Configure gpio*/
 	SpiPinConfig(COMMUNICATION_MODE);
 	if(spi_nss_mode == SPI_NSS_ACTIVE_LOW)
@@ -111,6 +116,19 @@ void SPIStart(void)
 	/* Init Spi */
 	HAL_SPI_Init(&hspi1);
 	SPI1->CR1 |= SPI_CR1_SPE;
+}
+
+/****************************************************************************
+Function:			SPIStart(void)
+Input:				none
+Output:				none
+PreCondition:		none
+Overview:			De-Initialize the SPI peripheral.
+****************************************************************************/
+void SPIStop(void)
+{
+	HAL_SPI_DeInit(&hspi1);
+	SpiPinConfig(INPUT_MODE);
 }
 
 /****************************************************************************
@@ -133,6 +151,8 @@ SpiError_t SpiSend(void)
 		HAL_GPIO_WritePin(SPI_PORT, SPI_NSS_PIN, GPIO_PIN_RESET);
 	else
 		HAL_GPIO_WritePin(SPI_PORT, SPI_NSS_PIN, GPIO_PIN_SET);
+
+	TIM4_delay_us(80);
 
 	while(1)
 	{
@@ -163,6 +183,8 @@ SpiError_t SpiSend(void)
 			break;
 		}
 	}
+
+	TIM4_delay_us(80);
 
 	if(spi_nss_mode == SPI_NSS_ACTIVE_LOW)
 		HAL_GPIO_WritePin(SPI_PORT, SPI_NSS_PIN, GPIO_PIN_SET);

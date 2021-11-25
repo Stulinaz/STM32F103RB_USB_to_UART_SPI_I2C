@@ -14,14 +14,15 @@
 #define SPI_RX_BUFF_DIM    100
 
 typedef enum{
-	SER_INTERFACE = 0u,
-	I2C_INTERFACE,
-	SPI_INTERFACE,
-	USB_INTERFACE
+	IDLE = 0u,
+	UART,
+	I2C,
+	SPI,
+	USBVCP
 }comm_inerface_t;
 
 typedef enum{
-	PRINT_ONLY = 0,
+	PRINT_ONLY = 0u,
 	APPEND_CR,
 	APPEND_CRCR,
 }append_t;

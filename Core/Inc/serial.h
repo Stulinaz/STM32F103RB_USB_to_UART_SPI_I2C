@@ -26,5 +26,6 @@ extern UART_HandleTypeDef huart2;
 UartConf_t UartUSerConf(command_t spi_cmd, uint8_t param);
 void UartInitDefault(void);
 void UartStart(void);
+void UartStop(void);
 void SerStartTransmit(void);
 #endif

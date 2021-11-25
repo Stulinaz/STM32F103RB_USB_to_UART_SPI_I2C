@@ -1,11 +1,13 @@
+#include "sys_definitions.h"
 #include "app.h"
 #include "led_manager.h"
 #include "buffers_manager.h"
 #include "i2c.h"
+#include "i2c_callback.h"
 #include "serial.h"
 #include "spi.h"
 
-command_t communication_mode = NO_COMMAND;
+comm_inerface_t communication_mode = IDLE;
 
 static void AppToTx(comm_inerface_t mode);
 static void I2cScanQueue(void);
@@ -24,53 +26,82 @@ void Application (command_t * user_cmd, uint8_t * const user_data)
 		case NO_COMMAND:
 			break;
 
+		case USER_CLOSE_INTERFACE:
+		if(communication_mode == UART)
+		{
+			UartStop();
+			UsbPrintString("uart closed", PRINT_ONLY);
+		}
+		else if(communication_mode == SPI)
+		{
+			SPIStop();
+			UsbPrintString("spi closed", PRINT_ONLY);
+		}
+		else if(communication_mode == I2C)
+		{
+			I2CHardReset();
+			UsbPrintString("i2c closed", PRINT_ONLY);
+		}
+		LedInterfaceSel(IDLE);
+		communication_mode = IDLE;
+		break;
+
 		case UNKNOWN_COMMAND:
-		if(communication_mode == USER_SERIAL_INTERFACE_SELECTED)
-			AppToTx(SER_INTERFACE);
-		else if(communication_mode == USER_SPI_INTERFACE_SELECTED)
-			AppToTx(SPI_INTERFACE);
+		if(communication_mode == UART)
+			AppToTx(UART);
+		else if(communication_mode == SPI)
+			AppToTx(SPI);
 		else
 			UsbPrintString("unknown command", PRINT_ONLY);
 		break;
 
 		case USER_SERIAL_INTERFACE_SELECTED:
 		UartStart();
-		LedInterfaceSel(USER_SERIAL_INTERFACE_SELECTED);
-		communication_mode = USER_SERIAL_INTERFACE_SELECTED;
+		LedInterfaceSel(UART);
+		communication_mode = UART;
 		UsbPrintString("Serial interface selected", PRINT_ONLY);
 		break;
 
 		case USER_I2C_INTERFACE_SELECTED:
-		LedInterfaceSel(USER_I2C_INTERFACE_SELECTED);
-		communication_mode = USER_I2C_INTERFACE_SELECTED;
+		LedInterfaceSel(I2C);
+		communication_mode = I2C;
 		UsbPrintString("I2C interface selected", PRINT_ONLY);
 		break;
 
 		case USER_SPI_INTERFACE_SELECTED:
 		SPIStart();
-		LedInterfaceSel(USER_SPI_INTERFACE_SELECTED);
-		communication_mode = USER_SPI_INTERFACE_SELECTED;
+		LedInterfaceSel(SPI);
+		communication_mode = SPI;
 		UsbPrintString("SPI interface selected", PRINT_ONLY);
 		break;
 
 		/* Serial */
 		case USER_SER_SET_BAUDRATE:
-		if(UartUSerConf(*user_cmd, *user_data) == UART_CONFIGURATION_OK)
-			UsbPrintString("Serial baudrate set", PRINT_ONLY);
+		if(communication_mode != UART)
+		{
+			if(UartUSerConf(*user_cmd, *user_data) == UART_CONFIGURATION_OK)
+				UsbPrintString("Serial baudrate set", PRINT_ONLY);
+			else
+				UsbPrintString(wrong_param, PRINT_ONLY);
+		}
 		else
-			UsbPrintString(wrong_param, PRINT_ONLY);
+			UsbPrintString("Error-interface must be closed", PRINT_ONLY);
 		break;
 
 		/* SPI */
 		case USER_SPI_CLK_POLARITY_LOW:
 		case USER_SPI_CLK_POLARITY_HIGH:
 		case USER_SPI_SPEED_SELECTION:
-		if(SpiUserConf(*user_cmd, *user_data) == SPI_CONFIGURATION_OK)
-			UsbPrintString("Spi parameter set", PRINT_ONLY);
+		if(communication_mode != SPI)
+		{
+			if(SpiUserConf(*user_cmd, *user_data) == SPI_CONFIGURATION_OK)
+				UsbPrintString("Spi parameter set", PRINT_ONLY);
+			else
+				UsbPrintString(wrong_param, PRINT_ONLY);
+		}
 		else
-			UsbPrintString(wrong_param, PRINT_ONLY);
+			UsbPrintString("Error-interface must be closed", PRINT_ONLY);
 		break;
-
 
 		/* I2C */
 		case USER_I2C_SET_SLAVE_ADDRESS:
@@ -123,11 +154,10 @@ void Application (command_t * user_cmd, uint8_t * const user_data)
 		break;
 
 		case USER_TRANSFER_REQUEST:
-			//TODO
-		if(communication_mode != USER_I2C_INTERFACE_SELECTED)
-			AppToTx(I2C_INTERFACE);
+		if(communication_mode != I2C)
+			AppToTx(I2C);
 		else
-			UsbPrintString("No Interface selected", PRINT_ONLY);
+			UsbPrintString("i2c not selected", PRINT_ONLY);
 		break;
 
 		/* Power Driver */
@@ -197,16 +227,16 @@ static void I2cScanQueue(void)
 			UsbPrintString("Write mode ", PRINT_ONLY);
 			conversion = DecToChar(byte);
 			UsbPrintString("Addr: ", PRINT_ONLY);
-			putbyte(USB_INTERFACE, (uint8_t)(conversion >> 8));
-			putbyte(USB_INTERFACE, (uint8_t) conversion );
+			putbyte(USBVCP, (uint8_t)(conversion >> 8));
+			putbyte(USBVCP, (uint8_t) conversion );
 			UsbPrintString("h ", APPEND_CR);
 			break;
 
 			case BYTE_WRITE:
 			conversion = DecToChar(byte);
 			UsbPrintString("Byte write: ", PRINT_ONLY);
-			putbyte(USB_INTERFACE, (uint8_t)(conversion >> 8));
-			putbyte(USB_INTERFACE, (uint8_t) conversion );
+			putbyte(USBVCP, (uint8_t)(conversion >> 8));
+			putbyte(USBVCP, (uint8_t) conversion );
 			UsbPrintString("h ", APPEND_CR);
 			break;
 
@@ -234,8 +264,8 @@ static void AppToTx(comm_inerface_t mode)
 	uint8_t i     = 0;
 	switch (mode)
 	{
-		case SER_INTERFACE:
-		data = SetBuffer(SER_INTERFACE);
+		case UART:
+		data = SetBuffer(UART);
 		if(data)
 		{
 			/* Enable USART TX interrupt*/
@@ -243,20 +273,38 @@ static void AppToTx(comm_inerface_t mode)
 		}
 		break;
 
-		case I2C_INTERFACE:
+		case I2C:
 		data = (uint16_t) I2cTransfer();
 		if(data)
 		{
 			/* Error on I2C bus*/
-			#ifndef I2C_ERROR_VERBOSE
 			data = DecToChar(data);
+#ifndef I2C_ERROR_VERBOSE
 			UsbPrintString("Transfer Failure - error code:", PRINT_ONLY);
-			putbyte(USB_INTERFACE, (uint8_t)(data  >> 8));
-			putbyte(USB_INTERFACE, (uint8_t) data  );
+			putbyte(USBVCP, (uint8_t)(data  >> 8));
+			putbyte(USBVCP, (uint8_t) data  );
 			UsbPrintString("h ", APPEND_CR);
-			#else
-			//TODO verbose level i2c error
-			#endif
+#else
+			switch(data)
+			{
+				case I2C_BUS_ERROR:
+				UsbPrintString("Bus error", TRUE);
+				break;
+
+				case I2C_ARBITRATION_LOST:
+				UsbPrintString("Arbitrarion lost error", TRUE);
+
+				case I2C_TIMEOUT:
+				UsbPrintString("Timeout", TRUE);
+				break;
+
+				case I2C_ADDRESS_NACK:
+				UsbPrintString("Address NACK", TRUE);
+				break;
+				default:
+					UsbPrintString("General Error", TRUE);
+			}
+#endif
 		}
 		else
 		{
@@ -268,16 +316,16 @@ static void AppToTx(comm_inerface_t mode)
 				{
 					data = DecToChar(byte);
 					UsbPrintString("Byte read: ", APPEND_CR);
-					putbyte(USB_INTERFACE, (uint8_t)(data >> 8));
-					putbyte(USB_INTERFACE, (uint8_t) data );
+					putbyte(USBVCP, (uint8_t)(data >> 8));
+					putbyte(USBVCP, (uint8_t) data );
 				}
 			}
 			UsbPrintString("Transfer Success", APPEND_CR);
 		}
 		break;
 
-		case SPI_INTERFACE:
-		data = SetBuffer(SPI_INTERFACE);
+		case SPI:
+		data = SetBuffer(SPI);
 		if(data)
 		{
 			/* Start transfer in polling mode*/
@@ -293,17 +341,16 @@ void TransferToPc(void)
 {
 	switch (communication_mode)
 	{
-		case USER_SERIAL_INTERFACE_SELECTED:
-			ToUsb(SER_INTERFACE);
+		case UART:
+			ToUsb(UART);
 		break;
-		case USER_SPI_INTERFACE_SELECTED:
-			ToUsb(SPI_INTERFACE);
+		case SPI:
+			ToUsb(SPI);
 		break;
-		case USER_I2C_INTERFACE_SELECTED:
+		case I2C:
 		default:
 			break;
 	}
-
 }
 
 /****************************************************************************
@@ -315,6 +362,9 @@ Overview:			Print a help string to the User on Virtual Com Port
 ****************************************************************************/
 static void PrintHelp(void)
 {
+	/* new line */
+	putbyte(USBVCP, CR_);
+
 	/*general command + options*/
 	UsbPrintString(serial_cmd_select, PRINT_ONLY);
 	UsbPrintString( " :serial interface ON", APPEND_CR);
@@ -339,6 +389,9 @@ static void PrintHelp(void)
 
 	UsbPrintString(test_led, PRINT_ONLY);
 	UsbPrintString( "Turn on all onboard leds", APPEND_CR);
+
+	UsbPrintString(close_interface, PRINT_ONLY);
+	UsbPrintString( "Turn off working interface", APPEND_CR);
 
 	/*serial command + options*/
 	UsbPrintString(serial_bausel, PRINT_ONLY);

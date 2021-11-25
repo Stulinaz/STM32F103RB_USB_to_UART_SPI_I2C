@@ -74,10 +74,27 @@ Overview:			enables clock, configures pin and initialize UART
 void UartStart(void)
 {
 	RCC->APB1ENR |= 0x00020000;
+	ser_comm_type.tx_buff_read_index  = 0;
+	ser_comm_type.tx_buff_read_index  = 0;
+	ser_comm_type.rx_buff_write_index = 0;
+	ser_comm_type.tx_buff_read_index  = 0;
 	SerialPinConfig(COMMUNICATION_MODE);
 	HAL_UART_Init(&huart2);
 	__HAL_UART_ENABLE_IT(&huart2,UART_IT_RXNE);
 	HAL_NVIC_EnableIRQ(USART2_IRQn);
+}
+
+/****************************************************************************
+Function:			void UartStop(void)
+Input:				none
+Output:				none
+PreCondition:		none
+Overview:			DeInitializes the UART peripheral
+****************************************************************************/
+void UartStop(void)
+{
+	HAL_UART_DeInit(&huart2);
+	SerialPinConfig(INPUT_MODE);
 }
 
 /****************************************************************************

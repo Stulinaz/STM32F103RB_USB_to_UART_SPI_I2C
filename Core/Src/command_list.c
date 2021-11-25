@@ -10,6 +10,7 @@ const char ch1_off[]           = "stm-ch1off";
 const char ch2_on[]            = "stm-ch2on";
 const char ch2_off[]           = "stm-ch2off";
 const char test_led[]          = "stm-testled";
+const char close_interface[]   = "stm-a";
 
 /*ser command*/
 const char serial_bausel[]     = "ser-b";

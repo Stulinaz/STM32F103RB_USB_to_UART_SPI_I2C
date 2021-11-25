@@ -27,7 +27,7 @@ command_t Decode(uint16_t cmd_len, uint8_t *const param)
 
 	/* store user input in temporary buffer */
 	for(i=0; i < cmd_len; i++)
-		getbyte(USB_INTERFACE, buff+i);
+		getbyte(USBVCP, buff+i);
 
 	/* parse space char */
 	if( !ParseCommand(cmd_len, buff) )
@@ -63,6 +63,9 @@ command_t Decode(uint16_t cmd_len, uint8_t *const param)
 
 	if(memcmp(buff, test_led, strlen(test_led)) == 0)
 		return USER_TEST_ONBOARD_LED;
+
+	if(memcmp(buff, close_interface, strlen(close_interface)) == 0)
+		return USER_CLOSE_INTERFACE;
 
 	/* serial */
     if(memcmp(buff, serial_bausel, strlen(serial_bausel)) == 0)

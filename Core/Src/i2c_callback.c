@@ -29,8 +29,9 @@ void MX_I2C1_Init(void)
 
 void I2CHardReset(void)
 {
-	HAL_I2C_DeInit(&hi2c1);
+	//HAL_I2C_DeInit(&hi2c1);
 	RCC->APB1RSTR |= RCC_APB1RSTR_I2C1RST;
+	I2cPinConfig(INPUT_MODE);
 }
 
 static void I2cPollFlagSR1(i2c_error_t *const status, uint32_t flag)

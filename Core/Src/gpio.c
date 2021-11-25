@@ -24,7 +24,7 @@ void GPIO_Init(void)
 	HAL_GPIO_WritePin(DRIVER_CH1_GPIO_Port,   DRIVER_CH1_Pin, GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(DRIVER_CH2_GPIO_Port,   DRIVER_CH2_Pin, GPIO_PIN_RESET);
 
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
 
 	/*Configure GPIO pin: USB_ENABLE*/
 	GPIO_InitStruct.Pin   = USB_ENABLE_Pin;
@@ -222,5 +222,17 @@ void UsbEnable(void)
 {
 	/*AS SOON AS THE USB IS ENABLED, USB_DM AND USB_DP ARE AUTOMATICALLY CONNECTED TO THE USB INTERNAL TRASCEIVER*/
 	/* EXTERNAL PULL UP IS NEEDED */
+	HAL_GPIO_WritePin(USB_ENABLE_GPIO_Port,   USB_ENABLE_Pin, GPIO_PIN_SET);
+}
+
+/****************************************************************************
+Function:			void UsbDisable(void)
+Input:				/
+Output:				/
+PreCondition:		/
+Overview:			Disable pull up on DATA+ ( 1.5k resistor)
+****************************************************************************/
+void UsbDisable(void)
+{
 	HAL_GPIO_WritePin(USB_ENABLE_GPIO_Port,   USB_ENABLE_Pin, GPIO_PIN_SET);
 }

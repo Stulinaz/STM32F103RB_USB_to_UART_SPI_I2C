@@ -7,6 +7,9 @@
 /* IIC PULL UP */
 #define IIC_PULLUP_EXTERNLAL
 
+/* IIC VERBOSE ERROR OUPUT */
+#define I2C_ERROR_VERBOSE
+
 /* ACCESSORIES*/
 #define TAB         (uint8_t) 0x09
 #define CR_         (uint8_t) 0x0D

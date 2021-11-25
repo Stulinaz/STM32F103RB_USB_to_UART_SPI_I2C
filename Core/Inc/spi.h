@@ -42,6 +42,7 @@ typedef enum{
 SpiConf_t SpiUserConf(command_t spi_cmd, uint8_t param);
 void SPIInitDefault(void);
 void SPIStart(void);
+void SPIStop(void);
 SpiError_t SpiSend(void);
 
 #endif
