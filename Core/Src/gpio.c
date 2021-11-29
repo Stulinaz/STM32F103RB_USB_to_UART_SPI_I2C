@@ -1,3 +1,4 @@
+#include "sys_definitions.h"
 #include "gpio.h"
 
 void GPIO_Init(void)
@@ -63,23 +64,42 @@ void SerialPinConfig(DataPInConfig_t mode)
 		GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
 		GPIO_InitStruct.Pull = GPIO_NOPULL;
 
+		GPIO_InitStruct.Pin  = UART_CTS_PIN;
+		HAL_GPIO_Init(UART_CTS_PORT, &GPIO_InitStruct);
+
+		GPIO_InitStruct.Pin  = UART_RTS_PIN;
+		HAL_GPIO_Init(UART_RTS_PORT, &GPIO_InitStruct);
+
 		GPIO_InitStruct.Pin  = UART_TX_PIN;
-		HAL_GPIO_Init(UART_PORT, &GPIO_InitStruct);
+		HAL_GPIO_Init(UART_TX_PORT, &GPIO_InitStruct);
 
 		GPIO_InitStruct.Pin  = UART_RX_PIN;
-		HAL_GPIO_Init(UART_PORT, &GPIO_InitStruct);
+		HAL_GPIO_Init(UART_RX_PORT, &GPIO_InitStruct);
 	}
 	else if(mode == COMMUNICATION_MODE)
 	{
+		HAL_GPIO_WritePin(UART_RTS_PORT, UART_RTS_PIN, GPIO_PIN_RESET);
+		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+
+		GPIO_InitStruct.Pin   = UART_CTS_PIN;
+		GPIO_InitStruct.Mode  = GPIO_MODE_INPUT;
+		GPIO_InitStruct.Pull  = GPIO_PULLUP;
+		HAL_GPIO_Init(UART_CTS_PORT, &GPIO_InitStruct);
+
+		GPIO_InitStruct.Pin   = UART_RTS_PIN;
+		GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;
+		GPIO_InitStruct.Pull  = GPIO_NOPULL;
+		HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
 		GPIO_InitStruct.Pin   = UART_TX_PIN;
 		GPIO_InitStruct.Mode  = GPIO_MODE_AF_PP;
 		GPIO_InitStruct.Pull  = GPIO_NOPULL;
-		HAL_GPIO_Init(UART_PORT, &GPIO_InitStruct);
+		HAL_GPIO_Init(UART_TX_PORT, &GPIO_InitStruct);
 
 		GPIO_InitStruct.Pin  = UART_RX_PIN;
 		GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
 		GPIO_InitStruct.Pull = GPIO_PULLUP;
-		HAL_GPIO_Init(UART_PORT, &GPIO_InitStruct);
+		HAL_GPIO_Init(UART_RX_PORT, &GPIO_InitStruct);
 	}
 }
 
@@ -109,7 +129,7 @@ void I2cPinConfig(DataPInConfig_t mode)
 	    GPIO_InitStruct.Pin   = IIC_SDA_PIN;
 	    GPIO_InitStruct.Mode  = GPIO_MODE_AF_OD;
 	    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-#ifdef IIC_PULLUP_EXTERNLAL
+#ifdef IIC_PULLUP_EXTERNAL
 	    GPIO_InitStruct.Pull  = GPIO_NOPULL;
 #else
 	    GPIO_InitStruct.Pull  = GPIO_PULLUP;
@@ -119,7 +139,7 @@ void I2cPinConfig(DataPInConfig_t mode)
 	    GPIO_InitStruct.Pin   = IIC_SCL_PIN;
 	    GPIO_InitStruct.Mode  = GPIO_MODE_AF_OD;
 	    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-#ifdef IIC_PULLUP_EXTERNLAL
+#ifdef IIC_PULLUP_EXTERNAL
 	    GPIO_InitStruct.Pull  = GPIO_NOPULL;
 #else
 	    GPIO_InitStruct.Pull  = GPIO_PULLUP;

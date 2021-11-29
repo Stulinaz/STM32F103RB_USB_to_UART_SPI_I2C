@@ -27,6 +27,7 @@
 #include "sys_init.h"
 #include "app_usb.h"
 #include "app.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/

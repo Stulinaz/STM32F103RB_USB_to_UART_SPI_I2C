@@ -92,9 +92,18 @@ void   MX_SPI1_Init(void);
 void   MX_USART2_UART_Init(void);
 void   MX_ADC1_Init(void);
 /* USER CODE BEGIN Private defines */
-#define UART_PORT GPIOA
 #define UART_TX_PIN GPIO_PIN_2
+#define UART_TX_PORT GPIOA
+
 #define UART_RX_PIN GPIO_PIN_3
+#define UART_RX_PORT GPIOA
+
+#define UART_CTS_PIN GPIO_PIN_0
+#define UART_CTS_PORT GPIOA
+
+#define UART_RTS_PIN GPIO_PIN_1
+#define UART_RTS_PORT GPIOA
+
 #define SPI_PORT GPIOA
 #define SPI_NSS_PIN GPIO_PIN_4
 #define SPI_MISO_PIN GPIO_PIN_6
