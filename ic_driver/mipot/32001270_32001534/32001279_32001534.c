@@ -57,24 +57,25 @@ MoudleProgramResult_t ProgramTRXModule(void)
 	uint32_t time = 0;
 	MoudleProgramResult_t stat = MODULE_PROGRAMMING_FAIL;
 
+	//MipotTRXUartStart();
+
 	buff[0] = MIPTRX_START_BYTE;
 	buff[1] = MIPTRX_STANDART_CMD_LEN;
 	buff[2] = MIPTRX_CHANNEL1_CMD_BYTE;
 	buff[3] = MIPTRX_CHANNEL_FREQ_868_3;
 	buff[4] = 0xFF - (((buff[0]^buff[1])^buff[2])^buff[3]);
 
-	MipotTRXUartStart();
-
+	/* Output the command on CH_SEL pin*/
+	for(i=0; i<MIPTRX_STANDART_CMD_LEN; i++)
+		putbyte(UART, buff[i]);
 	HAL_Delay(100);
 
 	/* Generate a pulse on EN pin according to reference manual */
 	HAL_GPIO_WritePin(UART_RTS_PORT, UART_RTS_PIN, GPIO_PIN_SET);
-	TIM4_delay_us(90);
+	TIM4_delay_us(80);
 	HAL_GPIO_WritePin(UART_RTS_PORT, UART_RTS_PIN, GPIO_PIN_RESET);
 
-	/* Output the command on CH_SEL pin*/
-	for(i=0; i<MIPTRX_STANDART_CMD_LEN; i++)
-		putbyte(UART, buff[i]);
+	HAL_Delay(10);
 	SerStartTransmit();
 
 	time = HAL_GetTick();

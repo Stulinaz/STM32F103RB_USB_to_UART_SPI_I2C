@@ -27,7 +27,6 @@
 #include "sys_init.h"
 #include "app_usb.h"
 #include "app.h"
-
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -94,12 +93,12 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	 DecodeFromPc ();
-	 LedManager();
-	 TransferToPc ();
-    /* USER CODE END WHILE */
+	DecodeFromPc ();
+	LedManager();
+	TransferToPc ();
+	/* USER CODE END WHILE */
 
-    /* USER CODE BEGIN 3 */
+	/* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
 }

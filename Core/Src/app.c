@@ -6,6 +6,10 @@
 #include "i2c_callback.h"
 #include "serial.h"
 #include "spi.h"
+#include "tim4_1us_tick.h"
+#ifdef MIPOT_TRX_PROGRAM_ENABLED
+#include "32001279_32001534.h"
+#endif
 
 comm_inerface_t communication_mode = IDLE;
 
@@ -192,6 +196,32 @@ void Application (command_t * user_cmd, uint8_t * const user_data)
 		case USER_TEST_ONBOARD_LED:
 		LedTest(10000);
 		break;
+
+#ifdef MIPOT_TRX_PROGRAM_ENABLED
+		case USER_MIP_TRX_GENERATE_IMPULSE:
+		if(communication_mode == UART)
+		{
+			HAL_GPIO_WritePin(UART_RTS_PORT, UART_RTS_PIN, GPIO_PIN_SET);
+			TIM4_delay_us(80);
+			HAL_GPIO_WritePin(UART_RTS_PORT, UART_RTS_PIN, GPIO_PIN_RESET);
+			UsbPrintString("impulse generated on RTS pin", PRINT_ONLY);
+		}
+		else
+			UsbPrintString("Err", PRINT_ONLY);
+		break;
+
+		case USER_MIP_TRX_PROGRAM_MODULE:
+		if(communication_mode == UART)
+		{
+			if(ProgramTRXModule() == MODULE_PROGRAMMING_SUCCESS)
+				UsbPrintString("Success!!", PRINT_ONLY);
+			else
+				UsbPrintString("Module setup fail", PRINT_ONLY);
+		}
+		else
+			UsbPrintString("Err", PRINT_ONLY);
+		break;
+#endif
 
 		default:
 			break;
@@ -438,6 +468,13 @@ static void PrintHelp(void)
 	UsbPrintString(transfer_start, PRINT_ONLY);
 	UsbPrintString(" :start i2c transfer", APPEND_CRCR);
 
+#ifdef MIPOT_TRX_PROGRAM_ENABLED
+	UsbPrintString(mip_impulse, PRINT_ONLY);
+	UsbPrintString(" :generate 100us impulse on RTS pin", APPEND_CR);
+
+	UsbPrintString(mip_program, PRINT_ONLY);
+	UsbPrintString(" :program module", APPEND_CRCR);
+#endif
 	/* End string*/
 	UsbPrintString("STM32F103RBT6", APPEND_CR);
 }

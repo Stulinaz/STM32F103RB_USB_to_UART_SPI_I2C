@@ -33,6 +33,10 @@ const char i2c_queue_req[]     = "i2c-q";
 const char i2c_queue_delete[]  = "i2c-d";
 const char transfer_start[]    = "i2c-x";
 
+/* Mipot TRX driver */
+const char mip_impulse[]       = "mip-i";
+const char mip_program[]       = "mip-p";
+
 /* accessories */
 const char queue_full[]        = "Queue full";
 const char wrong_param[]       = "Wrong parameter";

@@ -1,3 +1,4 @@
+#include "sys_definitions.h"
 #include "command_process.h"
 #include "usbd_cdc_if.h"
 #include <string.h>
@@ -126,6 +127,14 @@ command_t Decode(uint16_t cmd_len, uint8_t *const param)
 
 	if(memcmp(buff, transfer_start, strlen(transfer_start)) == 0)
 		return USER_TRANSFER_REQUEST;
+
+#ifdef MIPOT_TRX_PROGRAM_ENABLED
+	if(memcmp(buff, mip_impulse, strlen(mip_impulse)) == 0)
+		return USER_MIP_TRX_GENERATE_IMPULSE;
+
+	if(memcmp(buff, mip_program, strlen(mip_program)) == 0)
+		return USER_MIP_TRX_PROGRAM_MODULE;
+#endif
 
 	return UNKNOWN_COMMAND;
 }

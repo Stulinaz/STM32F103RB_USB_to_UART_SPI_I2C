@@ -136,7 +136,7 @@ void UsbPrintString(const char *buff, append_t character)
 		break;
 	}
 	CDC_Transmit_FS(UserTxBufferFS, usb_comm_type.tx_buff_write_index);
-	idx_strct_ptr->tx_buff_write_index = 0;
+	usb_comm_type.tx_buff_write_index = 0;
 }
 
 uint16_t SetBuffer(comm_inerface_t comm_type)
@@ -159,6 +159,6 @@ void ToUsb(comm_inerface_t comm_type)
 		while( getbyte(comm_type, &byte) )
 			putbyte(USBVCP, byte);
 		CDC_Transmit_FS(UserTxBufferFS, usb_comm_type.tx_buff_write_index);
-		idx_strct_ptr->tx_buff_write_index = 0;
+		usb_comm_type.tx_buff_write_index = 0;
 	}
 }

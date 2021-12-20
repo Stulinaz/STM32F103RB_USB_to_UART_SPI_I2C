@@ -22,7 +22,7 @@ HAL_StatusTypeDef TIM4Init_us(void)
   htim4.Instance               = TIM4;
   htim4.Init.Prescaler         = 12;
   htim4.Init.CounterMode       = TIM_COUNTERMODE_UP;
-  htim4.Init.Period            = 65535;
+  htim4.Init.Period            = 80;
   htim4.Init.ClockDivision     = TIM_CLOCKDIVISION_DIV1;
   htim4.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
 
@@ -56,21 +56,18 @@ void TIM4_delay_us(uint16_t time)
 {
 	if(!time)
 		return;
+	/* clear update flag */
+	TIM4->SR &= ~TIM_SR_UIF;
 	/* reset counter */
 	TIM4->CNT = 0;
 	TIM4->ARR = time;
 	/* counter enable */
 	TIM4->CR1 |=TIM_CR1_CEN;
-	while(1)
-	{
 #ifdef TIM4_IT_ENABLED
-		if(tim4_us_cnt)
-			break;
+	while(!tim4_us_cnt);
 #else
-		if( (TIM4->SR & TIM_SR_UIF) != 0)
-			break;
+	while(!(TIM4->SR & TIM_SR_UIF));
 #endif
-	}
 	/* stop counter */
 	TIM4->CR1 &= (~TIM_CR1_CEN);
 	/* reset counter */

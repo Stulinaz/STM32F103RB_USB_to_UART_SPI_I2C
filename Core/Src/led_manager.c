@@ -106,7 +106,7 @@ static void CommunicationLedSetTime(void)
 		case SPI:
 		{
 			if (data_avail(visualize_transfer) != 0)
-				tx_led_countdown = TX_LED_ON_TIME;
+				rx_led_countdown = TX_LED_ON_TIME;
 			if (data_toprocess(visualize_transfer) != 0)
 				tx_led_countdown = RX_LED_ON_TIME;
 		}
@@ -129,7 +129,7 @@ void CommunicationLedVisualize(void)
 {
 	if(!TXRXLedEnable)
 		return;
-	if ( (tx_led_countdown == 0) && (tx_led_countdown == 0) )
+	if ( (tx_led_countdown == 0) && (rx_led_countdown == 0) )
 	{
 		HAL_GPIO_WritePin(TX_LED_GPIO_Port, TX_LED_Pin, GPIO_PIN_RESET);
 		HAL_GPIO_WritePin(RX_LED_GPIO_Port, RX_LED_Pin, GPIO_PIN_RESET);

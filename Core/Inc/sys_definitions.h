@@ -9,7 +9,7 @@
 #define I2C_ERROR_VERBOSE
 
 /* IC DRIVER - MIPOT TRZ MODULE */
-//#define MIPOT_TRX_PROGRAM_ENABLED
+#define MIPOT_TRX_PROGRAM_ENABLED
 
 /* ACCESSORIES*/
 #define TAB         (uint8_t) 0x09

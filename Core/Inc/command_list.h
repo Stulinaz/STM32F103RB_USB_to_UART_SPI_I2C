@@ -29,6 +29,8 @@ typedef enum{
 	USER_I2C_SEND_ADDRESS_READ,
 	USER_I2C_REQUEST_QUEUE_DATA,
 	USER_I2C_REQUEST_QUEUE_DELETE,
+	USER_MIP_TRX_GENERATE_IMPULSE,
+	USER_MIP_TRX_PROGRAM_MODULE,
 	HELP
 }command_t;
 
@@ -57,6 +59,8 @@ extern const char i2c_repeat_start[];
 extern const char i2c_queue_req[];
 extern const char i2c_queue_delete[];
 extern const char transfer_start[];
+extern const char mip_impulse[];
+extern const char mip_program[];
 extern const char queue_full[];
 extern const char wrong_param[];
 extern const char ready[];
