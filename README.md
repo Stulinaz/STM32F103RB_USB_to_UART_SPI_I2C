@@ -10,7 +10,9 @@ This board will help you to analyze and debug all the main digital and analog IC
 
 INFORMATION ON FIRMWARE DEVELOPMENT:
 
-DEVELIPMENT IDE: STM32CubeIDE Version: 1.6.0
+DEVELOPMENT IDE: STM32CubeIDE Version: 1.6.0
+
+KICAD VERSION: (5.1.5)-2,release build - 64 bit
 
 TOOLCHAIN: GNU Tools for STM32 (9-2020-q2-update)
 

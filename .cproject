@@ -81,7 +81,7 @@
                                     									
                                     <listOptionValue builtIn="false" value="../Core/Inc"/>
                                     									
-                                    <listOptionValue builtIn="false" value="&quot;C:\Users\Enrico\Desktop\Ricerca e Sviluppo\PROGETTI\23_USB_TO_I2C_CONVERTER\ic_driver\mipot\32001270_32001534&quot;"/>
+                                    <listOptionValue builtIn="false" value="../ic_driver/mipot/32001270_32001534"/>
                                     									
                                     <listOptionValue builtIn="false" value="../Drivers/STM32F1xx_HAL_Driver/Inc"/>
                                     									
@@ -115,7 +115,7 @@
                             							
                             <tool commandLinePattern="${COMMAND} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} ${FLAGS}" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.1373248393" name="MCU GCC Linker" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker">
                                 								
-                                <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.option.script.462261653" name="Linker Script (-T)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.option.script" useByScannerDiscovery="false" value="C:\Users\Enrico\Desktop\Ricerca e Sviluppo\PROGETTI\23_USB_TO_I2C_CONVERTER\STM32F103RBTX_FLASH.ld" valueType="string"/>
+                                <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.option.script.462261653" name="Linker Script (-T)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.option.script" useByScannerDiscovery="false" value="..\STM32F103RBTX_FLASH.ld" valueType="string"/>
                                 								
                                 <inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.input.1705172564" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.input">
                                     									

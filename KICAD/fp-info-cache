@@ -1,4 +1,11 @@
-16928056132653133
+16936251494773086
+15_KICAD_lib
+QFP50P2200X2200X160-144N
+
+
+0
+144
+144
 Battery
 BatteryHolder_Bulgin_BX0036_1xC
 Bulgin Battery Holder, BX0036, Battery Type C (https://www.bulgin.com/products/pub/media/bulgin/data/Battery_holders.pdf)
@@ -46892,6 +46899,34 @@ heatsink
 0
 2
 1
+INVITI
+INVITO1
+
+
+0
+0
+0
+INVITI
+INVITO2
+
+
+0
+0
+0
+INVITI
+INVITO3
+
+
+0
+0
+0
+INVITI
+INVITO4
+
+
+0
+0
+0
 Inductor_SMD
 L_6.3x6.3_H3
 Choke, SMD, 6.3x6.3mm 3mm height

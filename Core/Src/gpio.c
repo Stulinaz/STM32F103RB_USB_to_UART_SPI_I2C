@@ -254,5 +254,5 @@ Overview:			Disable pull up on DATA+ ( 1.5k resistor)
 ****************************************************************************/
 void UsbDisable(void)
 {
-	HAL_GPIO_WritePin(USB_ENABLE_GPIO_Port,   USB_ENABLE_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(USB_ENABLE_GPIO_Port,   USB_ENABLE_Pin, GPIO_PIN_RESET);
 }
