@@ -8,6 +8,10 @@ This project is an embedded software/hardawe solutions that allows you to transf
 This board will help you to analyze and debug all the main digital and analog IC’s as well as lot of IOT and RF demoboard, saving you the time to develop a custom firmware
 , or buying expensive data converters.
 
+CONTACT FOR INFORMATION AND SAMPLES:
+
+enrico.stulin@gmail.com
+
 INFORMATION ON FIRMWARE DEVELOPMENT AND HARDWARE:
 
 DEVELOPMENT IDE: STM32CubeIDE Version: 1.6.0
