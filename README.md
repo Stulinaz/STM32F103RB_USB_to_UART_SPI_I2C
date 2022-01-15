@@ -8,7 +8,7 @@ This project is an embedded software/hardawe solutions that allows you to transf
 This board will help you to analyze and debug all the main digital and analog IC’s as well as lot of IOT and RF demoboard, saving you the time to develop a custom firmware
 , or buying expensive data converters.
 
-INFORMATION ON FIRMWARE DEVELOPMENT:
+INFORMATION ON FIRMWARE DEVELOPMENT AND HARDWARE:
 
 DEVELOPMENT IDE: STM32CubeIDE Version: 1.6.0
 
@@ -36,7 +36,9 @@ POWER MOSFET
 
 ![Test Image 5](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/PHOTOS/IMG2_MOS.JPG)
 
+ON BOARD 64k (24C64) EEPROM FOR DATA STORAGE:
 
+![Test Image 8](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/PHOTOS/IMG8_EEPROM.JPG)
 
 CRITICAL COMPONENTS:
 
@@ -56,7 +58,13 @@ CRITICAL COMPONENTS:
 
 -component [U3]  : PART NUMBER:[MIC4427ZM] - DESCRIPTION[IC GATE DRVR LOW-SIDE 8SOIC] - DIGIKEY:[576-3513-5-ND]
 
+-component [U4]  : PART NUMBER:[M24C64] - DESCRIPTION[IC EEPROM 64KBIT I2C 1MHZ 8SO] - DIGIKEY:[497-14427-1-ND]
+
 MY DEBUG SETUP:
 
 ![Test Image 6](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/PHOTOS/IMG6_BOARD.JPG)
+
+REV 2 PCB WITH RED SOLDERMASK:
+
+![Test Image 7](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/PHOTOS/IMG7_BOARD_REV2.JPG)
 
