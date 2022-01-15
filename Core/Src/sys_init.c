@@ -4,6 +4,8 @@
 #include "serial.h"
 #include "usb_device.h"
 #include "tim4_1us_tick.h"
+#include "i2c_eeprom.h"
+#include "pcb_revision.h"
 
 /****************************************************************************
 Function:			void SYS_Init(void)
@@ -21,4 +23,7 @@ void SYS_Init(void)
 	SPIInitDefault();
 	UartInitDefault();
 	TIM4Init_us();
+#if (PCB_REV == PCB_REV2)
+	EepromIicInit();
+#endif
 }

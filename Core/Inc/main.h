@@ -29,7 +29,7 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f1xx_hal.h"
-
+#include "pcb_revision.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -66,10 +66,6 @@ void Error_Handler(void);
 #define SERIAL_LED_GPIO_Port GPIOB
 #define SPI_LED_Pin GPIO_PIN_2
 #define SPI_LED_GPIO_Port GPIOB
-#define I2C_LED_Pin GPIO_PIN_10
-#define I2C_LED_GPIO_Port GPIOB
-#define USB_LED_Pin GPIO_PIN_11
-#define USB_LED_GPIO_Port GPIOB
 #define STANDBY_LED_Pin GPIO_PIN_15
 #define STANDBY_LED_GPIO_Port GPIOB
 #define TX_LED_Pin GPIO_PIN_6
@@ -92,6 +88,23 @@ void   MX_SPI1_Init(void);
 void   MX_USART2_UART_Init(void);
 void   MX_ADC1_Init(void);
 /* USER CODE BEGIN Private defines */
+#if (PCB_REV == PCB_REV1)
+#define I2C_LED_Pin GPIO_PIN_10
+#define I2C_LED_GPIO_Port GPIOB
+#define USB_LED_Pin GPIO_PIN_11
+#define USB_LED_GPIO_Port GPIOB
+#elif (PCB_REV == PCB_REV2)
+#define EEPROM_IIC_SDA_PIN  GPIO_PIN_11
+#define EEPROM_IIC_SDA_PORT GPIOB
+#define EEPROM_IIC_SCL_PIN  GPIO_PIN_10
+#define EEPROM_IIC_SCL_PORT GPIOB
+#define I2C_LED_Pin GPIO_PIN_12
+#define I2C_LED_GPIO_Port GPIOB
+#define USB_LED_Pin GPIO_PIN_13
+#define USB_LED_GPIO_Port GPIOB
+#else
+#error "PCB revision must be defined in the file <pcb_revision.h>"
+#endif
 #define UART_TX_PIN GPIO_PIN_2
 #define UART_TX_PORT GPIOA
 

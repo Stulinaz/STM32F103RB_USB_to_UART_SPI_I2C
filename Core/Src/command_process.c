@@ -10,12 +10,12 @@ static uint8_t CharToHex(char msb, char lsb, uint8_t *const value);
 
 /****************************************************************************
 Function:			Decode
-Input:				cmd_len = lenght of commadn from Pc, *param = return value of some commands
+Input:				cmd_len = lenght of commadn from Pc, *param = return command, *data_len =data
 Output:				if command match return the command enum, otherwise UNKNOWN_COMMAND
 PreCondition:		USBInit()
 Overview:			Command handler
 ****************************************************************************/
-command_t Decode(uint16_t cmd_len, uint8_t *const param)
+command_t Decode(uint16_t cmd_len, uint8_t *param, uint8_t *data_len)
 {
 	uint8_t buff[TEMP_BUFF_DIM];
 	uint8_t i;
@@ -133,7 +133,31 @@ command_t Decode(uint16_t cmd_len, uint8_t *const param)
 		return USER_MIP_TRX_GENERATE_IMPULSE;
 
 	if(memcmp(buff, mip_program, strlen(mip_program)) == 0)
+	{
+		if( (cmd_len - strlen(mip_program)) == 0)
+		{
+			/* the only string that has been sent is "mip-p" */
+			return UNKNOWN_COMMAND;
+		}
+		if( (cmd_len - strlen(mip_program))%2 != 0)
+		{
+			/* wrong hex len */
+			return UNKNOWN_COMMAND;
+		}
+
+		for(i=0;i < (cmd_len - strlen(mip_program)) ;i+=2)
+		{
+			if( CharToHex(*(buff+strlen(mip_program)+i)/* LSB */, *(buff+strlen(mip_program)+i+1) /* MSB */, param) )
+			{
+				/* wrong char character G,H,I ecc.. */
+				return UNKNOWN_COMMAND;
+			}
+			else
+				param++;
+		}
+		*data_len = i/2;
 		return USER_MIP_TRX_PROGRAM_MODULE;
+	}
 #endif
 
 	return UNKNOWN_COMMAND;

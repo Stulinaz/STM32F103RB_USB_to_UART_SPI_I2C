@@ -5,7 +5,7 @@
 #include "tim4_1us_tick.h"
 #include "buffers_manager.h"
 #include "main.h"
-#include "32001279_32001534.h"
+#include "32001269_32001534.h"
 
 static void MipotTRXUartInit(void);
 static void MipotTRXUartStart(void);
@@ -50,24 +50,31 @@ static void MipotTRXUartStart(void)
 	HAL_NVIC_EnableIRQ(USART2_IRQn);
 }
 
-MoudleProgramResult_t ProgramTRXModule(void)
+MoudleProgramResult_t ProgramTRXModule(uint8_t *buff, uint8_t len)
 {
-	uint8_t buff[MIPTRX_STANDART_CMD_LEN];
+	uint8_t cmd[MIPTRX_STANDART_CMD_LEN];
 	uint8_t i     = 0;
+	uint8_t crc   = 0;
 	uint32_t time = 0;
 	MoudleProgramResult_t stat = MODULE_PROGRAMMING_FAIL;
 
-	//MipotTRXUartStart();
+	/* CRC IS NOT PART OF THE BUFFER */
+	if( len >= MIPTRX_STANDART_CMD_LEN)
+		return stat;
 
-	buff[0] = MIPTRX_START_BYTE;
-	buff[1] = MIPTRX_STANDART_CMD_LEN;
-	buff[2] = MIPTRX_CHANNEL1_CMD_BYTE;
-	buff[3] = MIPTRX_CHANNEL_FREQ_868_3;
-	buff[4] = 0xFF - (((buff[0]^buff[1])^buff[2])^buff[3]);
+	for(i=0;i<len;i++)
+	{
+		cmd[i] = buff[i];
+		crc = crc^cmd[i];
+	}
+
+	/* STORE CRC */
+	cmd[i] = 0xFF - crc;
 
 	/* Output the command on CH_SEL pin*/
-	for(i=0; i<MIPTRX_STANDART_CMD_LEN; i++)
-		putbyte(UART, buff[i]);
+	for(i=0; i<len+1; i++)
+		putbyte(UART, cmd[i]);
+
 	HAL_Delay(100);
 
 	/* Generate a pulse on EN pin according to reference manual */
@@ -76,6 +83,7 @@ MoudleProgramResult_t ProgramTRXModule(void)
 	HAL_GPIO_WritePin(UART_RTS_PORT, UART_RTS_PIN, GPIO_PIN_RESET);
 
 	HAL_Delay(10);
+
 	SerStartTransmit();
 
 	time = HAL_GetTick();

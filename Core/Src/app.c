@@ -8,7 +8,7 @@
 #include "spi.h"
 #include "tim4_1us_tick.h"
 #ifdef MIPOT_TRX_PROGRAM_ENABLED
-#include "32001279_32001534.h"
+#include "32001269_32001534.h"
 #endif
 
 comm_inerface_t communication_mode = IDLE;
@@ -20,10 +20,11 @@ static void PrintHelp(void);
 /****************************************************************************
 Function:			Application
 Input:				(command_t * user_cmd) last command correctly decoded
-					(uint8_t * const user_data) parameter decoded
+					(uint8_t *  user_data) data decoded
+					(uint8_t user_data_len) data len
 Overview:			Application Data Transfer
 ****************************************************************************/
-void Application (command_t * user_cmd, uint8_t * const user_data)
+void Application (command_t * user_cmd, uint8_t *user_data, uint8_t user_data_len)
 {
 	switch(*user_cmd)
 	{
@@ -211,9 +212,9 @@ void Application (command_t * user_cmd, uint8_t * const user_data)
 		break;
 
 		case USER_MIP_TRX_PROGRAM_MODULE:
-		if(communication_mode == UART)
+		if ( (communication_mode == UART) && (user_data_len) )
 		{
-			if(ProgramTRXModule() == MODULE_PROGRAMMING_SUCCESS)
+			if(ProgramTRXModule(user_data, user_data_len) == MODULE_PROGRAMMING_SUCCESS)
 				UsbPrintString("Success!!", PRINT_ONLY);
 			else
 				UsbPrintString("Module setup fail", PRINT_ONLY);
@@ -222,7 +223,6 @@ void Application (command_t * user_cmd, uint8_t * const user_data)
 			UsbPrintString("Err", PRINT_ONLY);
 		break;
 #endif
-
 		default:
 			break;
 	}

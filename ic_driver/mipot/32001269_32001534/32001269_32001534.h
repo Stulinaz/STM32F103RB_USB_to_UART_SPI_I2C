@@ -49,6 +49,6 @@ typedef enum{
 	MODULE_PROGRAMMING_SUCCESS,
 }MoudleProgramResult_t;
 
-MoudleProgramResult_t ProgramTRXModule(void);
+MoudleProgramResult_t ProgramTRXModule(uint8_t *buff, uint8_t len);
 
 #endif

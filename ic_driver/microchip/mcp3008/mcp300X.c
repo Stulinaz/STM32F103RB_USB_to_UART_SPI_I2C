@@ -38,7 +38,7 @@ static SpiError_t Mcp300XSpiSend(uint8_t *tx_buff, uint8_t *rx_buff, uint8_t tx_
 	uint8_t received_byte   = 0;
 	uint8_t i;
 	SPiDataHandler_t handler    = SPI_SEND_DATA;
-	SpiError_t stat = MCP300XSpiCheckErrors();
+	SpiError_t stat = Mcp300XSpiCheckErrors();
 
 	if(stat)
 		return stat;

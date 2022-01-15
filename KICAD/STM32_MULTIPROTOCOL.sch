@@ -1871,8 +1871,8 @@ $Comp
 L Memory_EEPROM:M24C02-WMN U4
 U 1 1 61F132DF
 P 8100 5700
-F 0 "U4" H 8650 5000 50  0000 C CNN
-F 1 "M24C02-WMN" H 8650 5100 50  0000 C CNN
+F 0 "U4" H 7950 6000 50  0000 C CNN
+F 1 "24C64" H 8400 5250 50  0000 C CNN
 F 2 "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm" H 8100 6050 50  0001 C CNN
 F 3 "http://www.st.com/content/ccc/resource/technical/document/datasheet/b0/d8/50/40/5a/85/49/6f/DM00071904.pdf/files/DM00071904.pdf/jcr:content/translations/en.DM00071904.pdf" H 8150 5200 50  0001 C CNN
 	1    8100 5700

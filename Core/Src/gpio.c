@@ -1,4 +1,5 @@
 #include "sys_definitions.h"
+#include "pcb_revision.h"
 #include "gpio.h"
 
 void GPIO_Init(void)
@@ -46,6 +47,7 @@ void GPIO_Init(void)
 	HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 	SerialPinConfig(INPUT_MODE);
 	I2cPinConfig(INPUT_MODE);
+	EepromPinInit();
 	SpiPinConfig(INPUT_MODE);
 }
 
@@ -229,6 +231,30 @@ void SpiPinConfig(DataPInConfig_t mode)
 		GPIO_InitStruct.Pull  = GPIO_NOPULL;
 		HAL_GPIO_Init(SPI_PORT, &GPIO_InitStruct);
 	}
+}
+
+/****************************************************************************
+Function:			void EepromPinInit(void)
+Input:				/
+Output:				/
+PreCondition:		/
+Overview:			Configure SCL pin and SDA pin for on board 24C64 EEPROM
+****************************************************************************/
+void EepromPinInit(void)
+{
+#if (PCB_REV == PCB_REV2)
+	GPIO_InitTypeDef GPIO_InitStruct = {0};
+    GPIO_InitStruct.Pin   = EEPROM_IIC_SDA_PIN;
+    GPIO_InitStruct.Mode  = GPIO_MODE_AF_OD;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+    GPIO_InitStruct.Pull  = GPIO_NOPULL;
+    HAL_GPIO_Init(EEPROM_IIC_SDA_PORT, &GPIO_InitStruct);
+
+    GPIO_InitStruct.Pin   = EEPROM_IIC_SCL_PIN;
+    GPIO_InitStruct.Mode  = GPIO_MODE_AF_OD;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+    HAL_GPIO_Init(EEPROM_IIC_SDA_PORT, &GPIO_InitStruct);
+#endif
 }
 
 /****************************************************************************

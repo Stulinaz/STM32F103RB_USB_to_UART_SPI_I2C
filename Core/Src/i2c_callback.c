@@ -1,9 +1,6 @@
 #include"i2c_callback.h"
 #include"gpio.h"
 
-/* I2C trasmitter mode at page 757 */
-/* I2C receiver   mode at page 761 */
-
 static void I2cPollFlagSR1(i2c_error_t *const status, uint32_t flag);
 static i2c_error_t I2cFailureDetect(void);
 
@@ -80,7 +77,6 @@ void Call_I2cCheckActivation (i2c_error_t *const status_transfer)
 
 void Call_I2cGenerateStart(i2c_error_t *const status_transfer)
 {
-	uint8_t reg;
 	/* generation of start condition */
 	hi2c1.Instance->CR1 |= I2C_CR1_START;
 
@@ -89,20 +85,18 @@ void Call_I2cGenerateStart(i2c_error_t *const status_transfer)
 
 	/* clear SB bit*/
 	if(status_transfer == NO_ERROR)
-		reg = hi2c1.Instance->SR1;
+		hi2c1.Instance->SR1;
 }
 
 void Call_I2cAddressSend(i2c_error_t *const status_transfer, uint8_t byte)
 {
-	uint8_t sr1;
-	uint8_t sr2;
 	hi2c1.Instance->DR = byte;
 	/*send address and wait for complete address transfer and ack*/
 	I2cPollFlagSR1(status_transfer, I2C_SR1_ADDR);
 	if ( (*status_transfer) == NO_ERROR)
 	{
-		sr1 = hi2c1.Instance->SR1;
-		sr2 = hi2c1.Instance->SR2;
+		hi2c1.Instance->SR1;
+		hi2c1.Instance->SR2;
 	}
 }
 

@@ -17,9 +17,12 @@ typedef struct{
 	uint32_t          inactivity_time;
 	uint8_t           cmd_len;
 	command_t         user_cmd;
+	uint8_t           user_data[10];
+	uint8_t           user_data_len;
 }interface_t;
 
-interface_t user_interface = { CHECK_USB, DISCONNECTED, 0, 0, 0, 0, NO_COMMAND};
+interface_t user_interface = { CHECK_USB, DISCONNECTED, 0, 0, 0, 0, NO_COMMAND,
+							 {0,0,0,0,0,0,0,0,0,0},0};
 
 /****************************************************************************
 Function:			DecodeFromPc
@@ -102,9 +105,8 @@ void DecodeFromPc (void)
 
 		case DECODE_MESSAGE:
 		{
-			uint8_t conf;
-			user_interface.user_cmd = Decode( data_avail(USBVCP), &conf);
-			Application(&user_interface.user_cmd, &conf);
+			user_interface.user_cmd = Decode( data_avail(USBVCP), user_interface.user_data, &user_interface.user_data_len);
+			Application(&user_interface.user_cmd, user_interface.user_data, user_interface.user_data_len);
 			user_interface.cmd_manager = RESTART;
 			break;
 		}

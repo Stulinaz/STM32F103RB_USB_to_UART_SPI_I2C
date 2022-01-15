@@ -2013,7 +2013,7 @@ Wire Wire Line
 	9000 1950 10350 1950
 Connection ~ 5850 7250
 Wire Wire Line
-	5850 7250 6000 7250
+	5850 7250 5950 7250
 Wire Wire Line
 	5400 7250 5450 7250
 Text GLabel 7450 3350 0    50   Input ~ 0
@@ -2022,4 +2022,24 @@ Wire Wire Line
 	7450 3350 7600 3350
 Text GLabel 6000 7250 2    50   Input ~ 0
 ADC12_IN15_PIN25
+$Comp
+L Connector:TestPoint TP15
+U 1 1 61DFA68B
+P 6150 7450
+F 0 "TP15" H 6100 7700 50  0000 L CNN
+F 1 "TestPoint" H 6208 7477 50  0001 L CNN
+F 2 "TestPoint:TestPoint_Pad_D1.5mm" H 6350 7450 50  0001 C CNN
+F 3 "~" H 6350 7450 50  0001 C CNN
+	1    6150 7450
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	5950 7250 5950 7350
+Wire Wire Line
+	5950 7350 6150 7350
+Wire Wire Line
+	6150 7350 6150 7450
+Connection ~ 5950 7250
+Wire Wire Line
+	5950 7250 6000 7250
 $EndSCHEMATC

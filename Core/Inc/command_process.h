@@ -8,7 +8,7 @@
 #define CHAR_SPACE            0x20
 #define TEMP_BUFF_DIM         50
 
-command_t Decode  (uint16_t cmd_len, uint8_t *const param);
+command_t Decode(uint16_t cmd_len, uint8_t *param, uint8_t *data_len);
 uint16_t DecToChar(uint8_t value);
 uint8_t ParseCommand(uint16_t len, uint8_t *buff);
 

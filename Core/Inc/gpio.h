@@ -14,6 +14,7 @@ void SerialPinConfig(DataPInConfig_t mode);
 void I2cPinConfig(DataPInConfig_t mode);
 void I2cSdaRelease(void);
 void SpiPinConfig(DataPInConfig_t mode);
+void EepromPinInit(void);
 void UsbEnable(void);
 void UsbDisable(void);
 
