@@ -225,6 +225,43 @@ uint16_t DecToChar(uint8_t value)
 }
 
 /****************************************************************************
+Function:			Uint32_ToPrintableString(uint32_t value, uint8_t *buff)
+Input:				uint32_t data
+Output:				User friendly data in ascii format
+
+Example:            Input: 0x000A(10 decimal)  -> Output 2 bytes : {31h,30h} -> 10 in ascii format
+					Input: 0x0123(291 decimal) -> Output 3 bytes : {31h,39h,32h} -> 291 in ascii format
+
+PreCondition:		None
+Overview:			Convert uint32_t into printable string made of acii characters (max 10 bytes)
+****************************************************************************/
+uint8_t Uint32_ToPrintableString(uint32_t value, uint8_t *buff)
+{
+	uint8_t unit;
+	uint8_t i;
+	uint8_t str_len = 0;
+
+	if(value == 0)
+		return 0;
+	unit = value%10;
+	value = value/10;
+	while(value||unit)
+	{
+		for(i=0;i<10;i++)
+		{
+			if(unit == ascii_value[i])
+			{
+				buff[str_len] = ascii_char[i];
+				str_len++;
+			}
+		}
+		unit = value % 10;
+		value = value/10;
+	}
+	return str_len;
+}
+
+/****************************************************************************
 Function:			ParseCommand
 Input:				usb buffer
 Output:				buffer parsed with space char

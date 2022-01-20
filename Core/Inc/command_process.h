@@ -10,6 +10,7 @@
 
 command_t Decode(uint16_t cmd_len, uint8_t *param, uint8_t *data_len);
 uint16_t DecToChar(uint8_t value);
+uint8_t Uint32_ToPrintableString(uint32_t value, uint8_t *buff);
 uint8_t ParseCommand(uint16_t len, uint8_t *buff);
 
 #endif

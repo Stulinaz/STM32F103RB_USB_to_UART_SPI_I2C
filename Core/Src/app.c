@@ -418,10 +418,10 @@ static void PrintHelp(void)
 	UsbPrintString( " :CH2 OFF", APPEND_CR);
 
 	UsbPrintString(test_led, PRINT_ONLY);
-	UsbPrintString( "Turn on all onboard leds", APPEND_CR);
+	UsbPrintString( " :Turn on all onboard leds", APPEND_CR);
 
 	UsbPrintString(close_interface, PRINT_ONLY);
-	UsbPrintString( "Turn off working interface", APPEND_CR);
+	UsbPrintString( " :Turn off working interface", APPEND_CR);
 
 	/*serial command + options*/
 	UsbPrintString(serial_bausel, PRINT_ONLY);
@@ -429,19 +429,19 @@ static void PrintHelp(void)
 
 	/*spi command + options*/
 	UsbPrintString(spi_clkpollow, PRINT_ONLY);
-	UsbPrintString("CLK to 0 when idle", APPEND_CR);
+	UsbPrintString(" :CLK to 0 when idle", APPEND_CR);
 
 	UsbPrintString(spi_clkpolhigh, PRINT_ONLY);
-	UsbPrintString("CLK to 1 when idle", APPEND_CR);
+	UsbPrintString(" :CLK to 1 when idle", APPEND_CR);
 
 	UsbPrintString(spi_speed, PRINT_ONLY);
 	UsbPrintString("X :clk speed", APPEND_CR);
 
 	UsbPrintString(spi_nssactivehigh, PRINT_ONLY);
-	UsbPrintString("NSS active low", APPEND_CR);
+	UsbPrintString(" :NSS active low", APPEND_CR);
 
 	UsbPrintString(spi_nssactivehigh, PRINT_ONLY);
-	UsbPrintString("NSS active high", APPEND_CRCR);
+	UsbPrintString(" :NSS active high", APPEND_CRCR);
 
 	/*i2c command + options*/
 	UsbPrintString(i2c_address, PRINT_ONLY);

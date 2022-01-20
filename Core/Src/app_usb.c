@@ -8,6 +8,10 @@
 #include "usb_device.h"
 #include "usbd_def.h"
 #include "app.h"
+#include "utility.h"
+#include "sys_definitions.h"
+
+static void PrintStatus(void);
 
 typedef struct{
 	command_manager_s cmd_manager;
@@ -85,7 +89,7 @@ void DecodeFromPc (void)
 			if ((HAL_GetTick() - user_interface.inactivity_time >= INACTIVITY_TIMEOUT))
 			{
 				user_interface.inactivity_time = 0;
-				UsbPrintString(ready, TRUE);
+				PrintStatus();
 			}
 		}
 		user_interface.cmd_manager = NO_DATA_TO_PROCESS;
@@ -121,4 +125,50 @@ void DecodeFromPc (void)
 		ErrorCodeSet(1);
 		break;
 	}
+}
+
+/****************************************************************************
+Function:			static void Printstatus(void)
+Input:				none
+Output:				none
+PreCondition:		none
+Overview:			Print some information about the device
+****************************************************************************/
+static void PrintStatus(void)
+{
+	uint8_t buff[10]={0,0,0,0,0,0,0,0,0,0};
+	uint8_t i;
+	uint8_t len;
+
+	uptime_time_t time = UptimeGet();
+	if ( (time.min == 0) && (time.hours == 0) && (time.days == 0) )
+		return;
+	UsbPrintString(ready, PRINT_ONLY);
+	UsbPrintString("- Device uptime < ", PRINT_ONLY);
+	/* DAYS */
+	if(time.days)
+	{
+		len = Uint32_ToPrintableString( (uint32_t)time.days, buff);
+		for(i=len; i>0; i--)
+			putbyte(USBVCP, buff[i-1]);
+		UsbPrintString("d ", PRINT_ONLY);
+	}
+	/* HOURS */
+	if(time.hours)
+	{
+		len = Uint32_ToPrintableString( (uint32_t)time.hours, buff);
+		for(i=len; i>0; i--)
+			putbyte(USBVCP, buff[i-1]);
+		UsbPrintString("h ", PRINT_ONLY);
+	}
+	/* MIN */
+	if(time.min)
+	{
+		len = Uint32_ToPrintableString( (uint32_t)time.min, buff);
+		for(i=len; i>0; i--)
+			putbyte(USBVCP, buff[i-1]);
+		UsbPrintString("m ", PRINT_ONLY);
+	}
+	UsbPrintString("> ", PRINT_ONLY);
+	putbyte(USBVCP, CR_);
 }
