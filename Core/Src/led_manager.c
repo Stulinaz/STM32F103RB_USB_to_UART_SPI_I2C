@@ -19,7 +19,7 @@ static void LedErrorManager(void);
 static void CommunicationLedSetTime(void);
 
 static led_error_manager display_error    = {0, 0, 0, ERR_NO_ERROR};
-static comm_inerface_t visualize_transfer = IDLE;
+static comm_interface_t visualize_transfer = IDLE;
 static _bool TXRXLedEnable                = TRUE;
 static uint32_t tx_led_countdown          = 0;
 static uint32_t rx_led_countdown          = 0;
@@ -56,7 +56,7 @@ Output:				none
 PreCondition:		none
 Overview:			led activation of working interface (SPI - UART - I2C)
 ****************************************************************************/
-void LedInterfaceSel(comm_inerface_t type)
+void LedInterfaceSel(comm_interface_t type)
 {
 	switch(type)
 	{

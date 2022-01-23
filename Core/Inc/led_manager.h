@@ -12,7 +12,7 @@
 
 void LedManager(void);
 void USBStatusLed(GPIO_PinState status);
-void LedInterfaceSel(comm_inerface_t type);
+void LedInterfaceSel(comm_interface_t type);
 void ErrorCodeSet(uint8_t err_num);
 void CommunicationLedVisualize(void);
 void LedTest(uint32_t time);

@@ -11,9 +11,9 @@
 #include "32001269_32001534.h"
 #endif
 
-comm_inerface_t communication_mode = IDLE;
+comm_interface_t communication_mode = IDLE;
 
-static void AppToTx(comm_inerface_t mode);
+static void AppToTx(comm_interface_t mode);
 static void I2cScanQueue(void);
 static void PrintHelp(void);
 
@@ -118,7 +118,7 @@ void Application (command_t * user_cmd, uint8_t *user_data, uint8_t user_data_le
 		if (I2cEnqeue(MASTER_TRANSMITTER , ADDRESS_TRANSFER))
 			UsbPrintString("Sending address in write mode", PRINT_ONLY);
 		else
-			UsbPrintString(queue_full, TRUE);
+			UsbPrintString(queue_full, PRINT_ONLY);
 		break;
 
 		case USER_IC2_ACCESS_MODE_RECEIVER:
@@ -286,7 +286,7 @@ Output:				none
 PreCondition:		none
 Overview:			Start data transfer on selected working interface
 ****************************************************************************/
-static void AppToTx(comm_inerface_t mode)
+static void AppToTx(comm_interface_t mode)
 {
 	i2c_queue_t cmd;
 	uint16_t data = 0;
@@ -318,21 +318,21 @@ static void AppToTx(comm_inerface_t mode)
 			switch(data)
 			{
 				case I2C_BUS_ERROR:
-				UsbPrintString("Bus error", TRUE);
+				UsbPrintString("Bus error", APPEND_CR);
 				break;
 
 				case I2C_ARBITRATION_LOST:
-				UsbPrintString("Arbitrarion lost error", TRUE);
+				UsbPrintString("Arbitrarion lost error", APPEND_CR);
 
 				case I2C_TIMEOUT:
-				UsbPrintString("Timeout", TRUE);
+				UsbPrintString("Timeout", APPEND_CR);
 				break;
 
 				case I2C_ADDRESS_NACK:
-				UsbPrintString("Address NACK", TRUE);
+				UsbPrintString("Address NACK", APPEND_CR);
 				break;
 				default:
-					UsbPrintString("General Error", TRUE);
+					UsbPrintString("General Error", APPEND_CR);
 			}
 #endif
 		}
@@ -371,15 +371,25 @@ void TransferToPc(void)
 {
 	switch (communication_mode)
 	{
+		case IDLE:
+		ToUsb(USBVCP);
+		break;
+
 		case UART:
-			ToUsb(UART);
+		ToUsb(UART);
 		break;
+
 		case SPI:
-			ToUsb(SPI);
+		ToUsb(SPI);
 		break;
+
 		case I2C:
+		ToUsb(USBVCP);
+		break;
+
 		default:
-			break;
+		ToUsb(USBVCP);
+		break;
 	}
 }
 
