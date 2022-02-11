@@ -1,11 +1,10 @@
 #include "sys_definitions.h"
-#ifdef MIPOT_TRX_PROGRAM_ENABLED
 #include "serial.h"
 #include "gpio.h"
 #include "tim4_1us_tick.h"
 #include "buffers_manager.h"
 #include "main.h"
-#include "32001269_32001534.h"
+#include "module.h"
 
 static void MipotTRXUartInit(void);
 static void MipotTRXUartStart(void);
@@ -52,14 +51,14 @@ static void MipotTRXUartStart(void)
 
 MoudleProgramResult_t ProgramTRXModule(uint8_t *buff, uint8_t len)
 {
-	uint8_t cmd[MIPTRX_STANDART_CMD_LEN];
+	uint8_t cmd[MIP1534TRX_STANDART_CMD_LEN];
 	uint8_t i     = 0;
 	uint8_t crc   = 0;
 	uint32_t time = 0;
 	MoudleProgramResult_t stat = MODULE_PROGRAMMING_FAIL;
 
 	/* CRC IS NOT PART OF THE BUFFER */
-	if( len >= MIPTRX_STANDART_CMD_LEN)
+	if( len >= MIP1534TRX_STANDART_CMD_LEN)
 		return stat;
 
 	for(i=0;i<len;i++)
@@ -97,10 +96,8 @@ MoudleProgramResult_t ProgramTRXModule(uint8_t *buff, uint8_t len)
 			stat = MODULE_PROGRAMMING_SUCCESS;
 			break;
 		}
-		if( (HAL_GetTick() - time) >= MIPTRX_PROGRAMMING_TIMEOUT)
+		if( (HAL_GetTick() - time) >= MIP1534TRX_PROGRAMMING_TIMEOUT)
 			break;
 	}
 	return stat;
 }
-
-#endif

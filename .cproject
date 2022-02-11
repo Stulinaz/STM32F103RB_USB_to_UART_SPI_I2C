@@ -81,7 +81,9 @@
                                     									
                                     <listOptionValue builtIn="false" value="../Core/Inc"/>
                                     									
-                                    <listOptionValue builtIn="false" value="../ic_driver/mipot/32001269_32001534"/>
+                                    <listOptionValue builtIn="false" value="../ic_driver/mipot/inc"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="../ic_driver/ssd1306/inc"/>
                                     									
                                     <listOptionValue builtIn="false" value="../Drivers/STM32F1xx_HAL_Driver/Inc"/>
                                     									

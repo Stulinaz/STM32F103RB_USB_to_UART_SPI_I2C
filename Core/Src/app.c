@@ -8,7 +8,7 @@
 #include "spi.h"
 #include "tim4_1us_tick.h"
 #ifdef MIPOT_TRX_PROGRAM_ENABLED
-#include "32001269_32001534.h"
+#include "module.h"
 #endif
 
 comm_interface_t communication_mode = IDLE;
