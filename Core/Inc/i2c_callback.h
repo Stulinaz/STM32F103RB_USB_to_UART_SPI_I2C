@@ -3,7 +3,7 @@
 
 #include "main.h"
 
-#define IIC_TIMEOUT 10
+#define IIC_TIMEOUT 30
 
 typedef enum{
 	NO_ERROR = 0,

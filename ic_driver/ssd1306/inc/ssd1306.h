@@ -20,6 +20,8 @@
 #define SSD1306_HEIGHT          64
 #endif
 
+#define SSD1306_BUFF_SIZE ((SSD1306_WIDTH * SSD1306_HEIGHT) / 8)
+
 #define SSD1306_IIC_ADDRESS_TYPE1 0x78u
 #define SSD1306_IIC_ADDRESS_TYPE2 0x79u
 #define SSD1306_IIC_ADDRESS SSD1306_IIC_ADDRESS_TYPE1
@@ -58,6 +60,7 @@
 /* NOP */
 #define SSD1306_NOP_CMD 0xE3u /* COmmand for no operation */
 
+#define SSD1306_COM_LR_REMAP
 
 /* Enumeration for screen colors */
 typedef enum {
@@ -83,6 +86,7 @@ void ssd1306_InvertColors(void);
 void ssd1306_SetCursor(uint8_t x, uint8_t y);
 void ssd1306_iic_init(void);
 uint8_t ssd1306_InitOled(void);
+void ssd1306DemoApp(void);
 i2c_error_t ssd1306_WriteCommand(uint8_t data);
 i2c_error_t ssd1306_WriteBuff(const uint8_t *buff, uint16_t len);
 #endif

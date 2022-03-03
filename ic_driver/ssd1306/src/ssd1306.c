@@ -1,7 +1,7 @@
 #include "ssd1306.h"
 #include "gpio.h"
 
-static uint8_t SSD1306_Buffer[SSD1306_WIDTH * SSD1306_HEIGHT / 8];
+static uint8_t SSD1306_Buffer[SSD1306_BUFF_SIZE];
 static SSD1306_t SSD1306;
 static uint32_t ssd1306_time = 0;
 static I2C_HandleTypeDef hi2c_ssd1306;
@@ -11,9 +11,12 @@ static i2c_error_t ssd1306_IicCheckStatus(uint32_t flag);
 void ssd1306_Fill(SSD1306_COLOR color)
 {
     uint32_t i;
-    for(i = 0; i < sizeof(SSD1306_Buffer); i++)
+    for(i = 0; i < SSD1306_BUFF_SIZE; i++)
     {
-        SSD1306_Buffer[i] = (color == Black) ? 0x00 : 0xFF;
+    	if(color == Black)
+    		SSD1306_Buffer[i] = 0x00;
+    	else
+    		SSD1306_Buffer[i] = 0xFF;
     }
 }
 
@@ -160,7 +163,27 @@ uint8_t ssd1306_InitOled(void)
     status += ssd1306_WriteCommand(0x8D);   /* Set DC-DC enable */
     status += ssd1306_WriteCommand(0x14);
     status += ssd1306_WriteCommand(0xAF);   /* Turn on SSD1306 panel */
+    // Clear screen
+    ssd1306_Fill(Black);
+    // Flush buffer to screen
+    ssd1306_UpdateScreen();
+    // Set default values for screen object
+    SSD1306.CurrentX = 0;
+    SSD1306.CurrentY = 0;
+    SSD1306.Initialized = 1;
     return status;
+}
+
+void ssd1306DemoApp(void)
+{
+	ssd1306_iic_init();
+	HAL_Delay(1000);
+	ssd1306_InitOled();
+	ssd1306_SetCursor(0, 0);
+	ssd1306_WriteString("SSD1306", Font_11x18, White);
+	ssd1306_SetCursor(0, 36);
+	ssd1306_WriteString("STM32", Font_11x18, White);
+	ssd1306_UpdateScreen();
 }
 
 i2c_error_t ssd1306_WriteCommand(uint8_t data)
@@ -195,12 +218,12 @@ i2c_error_t ssd1306_WriteCommand(uint8_t data)
 	if(stat)
 		return stat;
 
-	/* send data and stop condition */
+	/* send command */
 	hi2c_ssd1306.Instance->DR  = SSD1306_CMD_ONE_COMMAND;
 	stat = ssd1306_IicCheckStatus(I2C_SR1_TXE);
 	if(stat)
 		return stat;
-
+	/* send data and stop condition */
 	hi2c_ssd1306.Instance->DR  = data;
 	stat = ssd1306_IicCheckStatus(I2C_SR1_TXE);
 	if(stat)
@@ -214,7 +237,7 @@ i2c_error_t ssd1306_WriteCommand(uint8_t data)
 
 i2c_error_t ssd1306_WriteBuff(const uint8_t *buff, uint16_t len)
 {
-	uint8_t i;
+	uint16_t i;
 	i2c_error_t stat = NO_ERROR;
 
 	ssd1306_time = HAL_GetTick();
@@ -245,6 +268,11 @@ i2c_error_t ssd1306_WriteBuff(const uint8_t *buff, uint16_t len)
 	if(stat)
 		return stat;
 
+	hi2c_ssd1306.Instance->DR  = 0x40;
+	stat = ssd1306_IicCheckStatus(I2C_SR1_TXE);
+	if(stat)
+		return stat;
+
 	/* send data and stop condition */
 	for(i = 0; i< len; i++)
 	{
@@ -255,7 +283,9 @@ i2c_error_t ssd1306_WriteBuff(const uint8_t *buff, uint16_t len)
 			return stat;
 	}
 	hi2c_ssd1306.Instance->CR1 |= I2C_CR1_STOP;
+
 	HAL_Delay(10);
+
 	return stat;
 }
 

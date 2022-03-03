@@ -28,6 +28,7 @@
 #include "app_usb.h"
 #include "app.h"
 #include "utility.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -67,7 +68,6 @@
 
 int main(void)
 {
-
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
@@ -94,7 +94,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
+  while(1)
   {
 	UtilityUptime();
 	DecodeFromPc();
