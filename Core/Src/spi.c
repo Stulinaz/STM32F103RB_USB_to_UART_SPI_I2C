@@ -195,29 +195,26 @@ SpiError_t SpiSend(void)
 }
 
 /****************************************************************************
-Function:			SpiError_t SpiCheckErrors(void)
-Input:				none
-Output:				0 Ok - !=0 error
-PreCondition:		none
-Overview:			Check input data len and spi status register
+Function: SpiError_t SpiCheckErrors(void)
+Input: none
+Output: 0 Ok - !=0 error
+PreCondition: none
+Overview: Check input data len and spi status register
 ****************************************************************************/
 static SpiError_t SpiCheckErrors(void)
 {
-
+	SpiError_t stat = SPI_NO_ERROR;
+	uint32_t cr = SPI1->CR1;
+	uint32_t sr = SPI1->SR;
 	if(spi_comm_type.tx_buff_write_index == 0)
-		return SPI_BUFFLEN_ERROR;
-
-	if( (SPI1->CR1 & SPI_CR1_SPE) == 0)
-		return SPI_ENABLE_ERROR;
-
-	if( (SPI1->SR & SPI_SR_MODF) != 0)
-		return SPI_FAULT_ERROR;
-
-	if( (SPI1->SR & SPI_SR_UDR) != 0)
-		return SPI_UNDERRUN_ERROR;
-
-	if( (SPI1->SR & SPI_SR_BSY) != 0)
-		return SPI_BUSY_ERROR;
-
-	return SPI_NO_ERROR;
+		stat |= SPI_BUFFLEN_ERROR;
+	if( (cr & SPI_CR1_SPE) == 0)
+		stat |= SPI_ENABLE_ERROR;
+	if( sr & SPI_SR_MODF)
+		stat |= SPI_FAULT_ERROR;
+	if( sr & SPI_SR_UDR)
+		stat |= SPI_UNDERRUN_ERROR;
+	if( sr & SPI_SR_BSY)
+		stat |= SPI_BUSY_ERROR;
+	return stat;
 }

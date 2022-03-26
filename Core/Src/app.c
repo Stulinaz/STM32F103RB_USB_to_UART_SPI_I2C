@@ -288,6 +288,7 @@ Overview:			Start data transfer on selected working interface
 ****************************************************************************/
 static void AppToTx(comm_interface_t mode)
 {
+	SpiError_t spi_error = SPI_NO_ERROR;
 	i2c_queue_t cmd;
 	uint16_t data = 0;
 	uint8_t byte  = 0;
@@ -297,10 +298,7 @@ static void AppToTx(comm_interface_t mode)
 		case UART:
 		data = SetBuffer(UART);
 		if(data)
-		{
-			/* Enable USART TX interrupt*/
 			SerStartTransmit();
-		}
 		break;
 
 		case I2C:
@@ -309,12 +307,7 @@ static void AppToTx(comm_interface_t mode)
 		{
 			/* Error on I2C bus*/
 			data = DecToChar(data);
-#ifndef I2C_ERROR_VERBOSE
-			UsbPrintString("Transfer Failure - error code:", PRINT_ONLY);
-			putbyte(USBVCP, (uint8_t)(data  >> 8));
-			putbyte(USBVCP, (uint8_t) data  );
-			UsbPrintString("h ", APPEND_CR);
-#else
+#ifdef I2C_ERROR_VERBOSE
 			switch(data)
 			{
 				case I2C_BUS_ERROR:
@@ -334,6 +327,11 @@ static void AppToTx(comm_interface_t mode)
 				default:
 					UsbPrintString("General Error", APPEND_CR);
 			}
+#else
+			UsbPrintString("Transfer Failure - error code:", PRINT_ONLY);
+			putbyte(USBVCP, (uint8_t)(data  >> 8));
+			putbyte(USBVCP, (uint8_t) data  );
+			UsbPrintString("h ", APPEND_CR);
 #endif
 		}
 		else
@@ -358,8 +356,20 @@ static void AppToTx(comm_interface_t mode)
 		data = SetBuffer(SPI);
 		if(data)
 		{
-			/* Start transfer in polling mode*/
 			SpiSend();
+			spi_error = SpiSend();
+#ifdef SPI_ERROR_VERBOSE
+			if(spi_error & SPI_BUFFLEN_ERROR)
+				UsbPrintString("SPI buffer lenght error", APPEND_CR);
+			if(spi_error & SPI_ENABLE_ERROR)
+				UsbPrintString("SPI enable error", APPEND_CR);
+			if(spi_error & SPI_FAULT_ERROR)
+				UsbPrintString("SPI enable error", APPEND_CR);
+			if(spi_error & SPI_UNDERRUN_ERROR)
+				UsbPrintString("SPI underrun error", APPEND_CR);
+			if(spi_error & SPI_BUSY_ERROR)
+				UsbPrintString("SPI busy error", APPEND_CR);
+#endif
 		}
 		break;
 		default:
@@ -435,23 +445,38 @@ static void PrintHelp(void)
 
 	/*serial command + options*/
 	UsbPrintString(serial_bausel, PRINT_ONLY);
-	UsbPrintString("X :Selection of baudrate", APPEND_CRCR);
+	UsbPrintString("X :Selection of baudrate", APPEND_CR);
+	UsbPrintString("   X=0: 1200   baud", APPEND_CR);
+	UsbPrintString("   X=1: 4800   baud", APPEND_CR);
+	UsbPrintString("   X=1: 9600   baud (Default)", APPEND_CR);
+	UsbPrintString("   X=2: 19200  baud", APPEND_CR);
+	UsbPrintString("   X=3: 38400  baud", APPEND_CR);
+	UsbPrintString("   X=4: 57600  baud", APPEND_CR);
+	UsbPrintString("   X=4: 115200 baud", APPEND_CRCR);
 
 	/*spi command + options*/
 	UsbPrintString(spi_clkpollow, PRINT_ONLY);
-	UsbPrintString(" :CLK to 0 when idle", APPEND_CR);
+	UsbPrintString(" :CLK to 0 when idle (Default)", APPEND_CR);
 
 	UsbPrintString(spi_clkpolhigh, PRINT_ONLY);
 	UsbPrintString(" :CLK to 1 when idle", APPEND_CR);
 
+	UsbPrintString(spi_nssactivehigh, PRINT_ONLY);
+	UsbPrintString(" :NSS active low (Default)", APPEND_CR);
+
+	UsbPrintString(spi_nssactivehigh, PRINT_ONLY);
+	UsbPrintString(" :NSS active high", APPEND_CR);
+
 	UsbPrintString(spi_speed, PRINT_ONLY);
 	UsbPrintString("X :clk speed", APPEND_CR);
-
-	UsbPrintString(spi_nssactivehigh, PRINT_ONLY);
-	UsbPrintString(" :NSS active low", APPEND_CR);
-
-	UsbPrintString(spi_nssactivehigh, PRINT_ONLY);
-	UsbPrintString(" :NSS active high", APPEND_CRCR);
+	UsbPrintString("   X=0: 6   MHz", APPEND_CR);
+	UsbPrintString("   X=1: 3   MHz", APPEND_CR);
+	UsbPrintString("   X=2: 1.5 MHz", APPEND_CR);
+	UsbPrintString("   X=3: 750 kHz", APPEND_CR);
+	UsbPrintString("   X=4: 357 kHz", APPEND_CR);
+	UsbPrintString("   X=5: 187 kHz", APPEND_CR);
+	UsbPrintString("   X=6: 93  kHz", APPEND_CR);
+	UsbPrintString("   X=7: 47  kHz (Default)", APPEND_CRCR);
 
 	/*i2c command + options*/
 	UsbPrintString(i2c_address, PRINT_ONLY);

@@ -31,12 +31,12 @@ typedef enum{
 }SpiPrescaler_t;
 
 typedef enum{
-	SPI_NO_ERROR = 0u,
-	SPI_BUFFLEN_ERROR,
-	SPI_ENABLE_ERROR,
-	SPI_FAULT_ERROR,
-	SPI_UNDERRUN_ERROR,
-	SPI_BUSY_ERROR
+	SPI_NO_ERROR      = 0u,
+	SPI_BUFFLEN_ERROR = 0x01,
+	SPI_ENABLE_ERROR  = 0x02,
+	SPI_FAULT_ERROR   = 0x04,
+	SPI_UNDERRUN_ERROR= 0x08,
+	SPI_BUSY_ERROR    = 0x10
 }SpiError_t;
 
 SpiConf_t SpiUserConf(command_t spi_cmd, uint8_t param);

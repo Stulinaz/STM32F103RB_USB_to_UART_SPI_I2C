@@ -2,6 +2,8 @@
 #include "gpio.h"
 #include "buffers_manager.h"
 
+static ser_error_t SerCheckErrors(void);
+
 UART_HandleTypeDef huart2;
 
 /****************************************************************************
@@ -123,7 +125,7 @@ void USART2_IRQHandler(void)
 		/*Check Read data register not empty flag*/
 		if((USART2->SR & USART_SR_RXNE) != 0)
 		{
-			if(ser_comm_type.rx_buff_write_index < (ser_comm_type.rx_max_buff_dim))
+			if( (ser_comm_type.rx_buff_write_index < ser_comm_type.rx_max_buff_dim) && (!SerCheckErrors()) )
 			{
 				ser_rx_buff[ser_comm_type.rx_buff_write_index] = (uint8_t)(USART2->DR);
 				ser_comm_type.rx_buff_write_index++;
@@ -133,6 +135,31 @@ void USART2_IRQHandler(void)
 		}
 	}
 }
+
+/****************************************************************************
+Function: static ser_error_t SerCheckErrors(void)
+Input: none
+Output: none
+PreCondition: none
+Overview: none
+****************************************************************************/
+static ser_error_t SerCheckErrors(void)
+{
+	ser_error_t stat = SER_NO_ERROR;
+	uint32_t sr = USART2->SR;
+	/* ALL THE FOLLOWING FLAGS ARE CLEARED WITH THE SAME SOFTWARE SEQUENCE */
+	/* an read to the USART_SR register followed by a read to the USART_DR register */
+	if (sr & USART_SR_ORE)
+		stat |= SER_OVERRUN_ERROR;
+	if (sr & USART_SR_NE)
+		stat |=  SER_NOISE_ERROR;
+	if (sr & USART_SR_FE)
+		stat |=  SER_FRAMING_ERROR;
+	if (sr & USART_SR_PE)
+		stat |=  SER_PARITY_ERROR;
+	return stat;
+}
+
 /****************************************************************************
 Function:			void SerStartTransmit(void)
 Input:				none

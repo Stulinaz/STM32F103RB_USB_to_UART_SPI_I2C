@@ -24,7 +24,7 @@ HAL_StatusTypeDef TIM4Init_us(void)
   htim4.Init.CounterMode       = TIM_COUNTERMODE_UP;
   htim4.Init.Period            = 80;
   htim4.Init.ClockDivision     = TIM_CLOCKDIVISION_DIV1;
-  htim4.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
+  htim4.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
 
   if (HAL_TIM_Base_Init(&htim4) != HAL_OK)
 	  return HAL_ERROR;
