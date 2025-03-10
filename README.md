@@ -1,74 +1,88 @@
 # STM32F103RB__USB_to_UART-SPI-I2C
-Firmware and Kicad project for my USBtoUART/SPI/I2C converter.
 
-[PROJECT IN DEVELOPMENT]
+### Firmware and Kicad project for my USBtoUART/SPI/I2C converter.
 
-Based on the popular microcontroller STM32F103RBT6 and a custom PCB board.
+Based on the popular microcontroller ***STM32F103RBT6*** and a custom PCB board.
 This project is an embedded software/hardawe solutions that allows you to transfer data from USB to all the main digital interfaces - UART, I2C and SPI.
 This board will help you to analyze and debug all the main digital and analog IC’s as well as lot of IOT and RF demoboard, saving you the time to develop a custom firmware
 , or buying expensive data converters.
 
-CONTACT FOR INFORMATION AND SAMPLES:
+## Top Side of the board
 
-enrico.stulin@gmail.com
-
-INFORMATION ON FIRMWARE DEVELOPMENT AND HARDWARE:
-
-DEVELOPMENT IDE: STM32CubeIDE Version: 1.6.0
-
-KICAD VERSION: (5.1.5)-2,release build - 64 bit
-
-TOOLCHAIN: GNU Tools for STM32 (9-2020-q2-update)
-
-TOP OF PCB:
 ![Test Image 1](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/PHOTOS/IMG4_TOP.JPG)
 
-BOTTOM OF PCB:
+## Bottom Side of The board
+
 ![Test Image 2](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/PHOTOS/IMG1_BOT.JPG)
 
-FEATURES:
+## Features 
 
-SWD INTERFACE
+### SWD Interface
 
 ![Test Image 3](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/PHOTOS/IMG3_SWD.JPG)
 
-MINI USB WITH ESD PROTECTION:
+###  Mini USB Connector with ESD protection:
 
 ![Test Image 4](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/PHOTOS/IMG5_USB.JPG)
 
-POWER MOSFET
+###  Power mosfet
 
 ![Test Image 5](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/PHOTOS/IMG2_MOS.JPG)
 
-ON BOARD 64k (24C64) EEPROM FOR DATA STORAGE:
+### On board 64k (24C64) eeprom for data storage:
 
 ![Test Image 8](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/PHOTOS/IMG8_EEPROM.JPG)
 
-CRITICAL COMPONENTS:
 
--component [USB1]: PART NUMBER:[0675031020] - DESCRIPTION:[CONN RCPT USB2.0 MINI SMD R/A] - DIGIKEY:[WM5461CT-ND]
+## Bill of Materials
 
--component [ESD1]: PART NUMBER:[USBLC6-2SC6] - DESCRIPTION[TVS DIODE 5.25V 17V STO23-6] - DIGIKEY:[732-1077-1-ND]
+| Component  | Description                      | Part Number              | Digy           |
+|:---------  |:----------                       |:-------                  |:-------        |        
+| USB1       | CONN RCPT USB2.0 MINI SMD R/A    | 0675031020               | WM5461CT-ND    |
+| ESD1       | TVS DIODE 5.25V 17V STO23-6      | USBLC6-2SC6              | 732-1077-1-ND  |
+| ESD2       | TVS DIODE 5V SOT23-6]            | ESDA6V1BC6               | 497-6635-1-ND  |
+| U1         | Linear Voltage Regulator IC      | BSD-3-Clause             | 576-1172-ND    |
+| U2         | ic mcu 32 bit 128kb flash 64LQFP | STM32F103RBT6            | 497-6066-ND    |
+| Y2         | CRYSTAL 16.0000MHZ 4PF SMD       | ABM8W-16.0000MHZ-4-B1U-T3| 535-14020-1-ND |
+| U3         | IC GATE DRVR LOW-SIDE 8SOIC      | MIC4427ZM                | 576-3513-5-ND  |
+| U4         | IC GATE DRVR LOW-SIDE 8SOIC      | M24C64                   | 497-14427-1-ND |     
 
--component [ESD2]: PART NUMBER:[ESDA6V1BC6] - DESCRIPTION[TVS DIODE 5V SOT23-6] - DIGIKEY:[497-6635-1-ND]
+## Software needed for development
 
--component [U1] : PART NUMBER:[MIC39100-3.3WS] - DESCRIPTION[Linear Voltage Regulator IC Positive Fixed 1 Output 1A SOT-223-3] - DIGIKEY:[576-1172-ND]
+- [STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html) **1.17.0**
+- [KICAD](https://www.kicad.org/) **(5.1.5)-2,release build - 64 bit**
+- [GIT](https://git-scm.com/) **2.46.1.windows.1**
+- [Tera Term](https://teratermproject.github.io/index-en.html) **5.3 x86**
 
--component [U2]  : PART NUMBER:[STM32F103RBT6] - DESCRIPTION[ic mcu 32 bit 128kb flash 64LQFP] - DIGIKEY:[497-6066-ND]
+## Tools needed for development
 
--component [Y2]  : PART NUMBER:[ABM8W-16.0000MHZ-4-B1U-T3] - DESCRIPTION[CRYSTAL 16.0000MHZ 4PF SMD] - DIGIKEY:[535-14020-1-ND]
+Programmer [STLINK](https://www.st.com/en/development-tools/st-link-v2.html).
 
--component [USB2]  : PART NUMBER:[LG R974-LP-1] - DESCRIPTION[LED GREEN DIFFUSED 0805 SMD] - DIGIKEY:[475-1410-1-ND]
+## My Debug setup
 
--component [U3]  : PART NUMBER:[MIC4427ZM] - DESCRIPTION[IC GATE DRVR LOW-SIDE 8SOIC] - DIGIKEY:[576-3513-5-ND]
-
--component [U4]  : PART NUMBER:[M24C64] - DESCRIPTION[IC EEPROM 64KBIT I2C 1MHZ 8SO] - DIGIKEY:[497-14427-1-ND]
-
-MY DEBUG SETUP:
+### hardware revision 1
 
 ![Test Image 6](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/PHOTOS/IMG6_BOARD.JPG)
 
-REV 2 PCB WITH RED SOLDERMASK:
+### hardware revision 2
 
 ![Test Image 7](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/PHOTOS/IMG7_BOARD_REV2.JPG)
 
+## License
+
+| Component                                    | Copyright                          | License                                          |
+|:---------                                    |:----------                         |:-------                                          |
+| CMSIS                                        | ARM Limited                        | Apache-2.0                                       |
+| CMSIS Device                                 | ARM Limited - STMicroelectronics   | Apache-2.0                                       |
+| STM32WL HAL                                  | STMicroelectronics                 | BSD-3-Clause                                     |
+| FreeRTOS kernel                              | Amazon.com, Inc. or its affiliates | MIT                                              |
+| USB_to_UART-SPI-I2C                          |                                    | BSD-3-Clause                                     |
+
+## Contact
+
+***enrico.stulin@gmail.com***
+
+> [!CAUTION]
+> Manual soldering of SMD components requires high level of manual skills.
+> Project not suited for beginners in firmware development.
+> A good understanding of C language is a must.
