@@ -1,4 +1,9 @@
-# STM32F103RB__USB_to_UART-SPI-I2C
+
+<!-- For .md file development refers to https://docs.github.com/en -->
+# Stm32 Multiprotocol
+
+> [!IMPORTANT]  
+> Firmware rework scheduled by end of april.
 
 ### Firmware and Kicad project for my USBtoUART/SPI/I2C converter.
 
@@ -9,29 +14,29 @@ This board will help you to analyze and debug all the main digital and analog IC
 
 ## Top Side of the board
 
-![Test Image 1](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/PHOTOS/IMG4_TOP.JPG)
+![Test Image 1](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/img/IMG4_TOP.JPG)
 
 ## Bottom Side of The board
 
-![Test Image 2](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/PHOTOS/IMG1_BOT.JPG)
+![Test Image 2](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/img/IMG1_BOT.JPG)
 
 ## Features 
 
 ### SWD Interface
 
-![Test Image 3](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/PHOTOS/IMG3_SWD.JPG)
+![Test Image 3](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/img/IMG3_SWD.JPG)
 
 ###  Mini USB Connector with ESD protection:
 
-![Test Image 4](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/PHOTOS/IMG5_USB.JPG)
+![Test Image 4](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/img/IMG5_USB.JPG)
 
 ###  Power mosfet
 
-![Test Image 5](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/PHOTOS/IMG2_MOS.JPG)
+![Test Image 5](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/img/IMG2_MOS.JPG)
 
 ### On board 64k (24C64) eeprom for data storage:
 
-![Test Image 8](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/PHOTOS/IMG8_EEPROM.JPG)
+![Test Image 8](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/img/IMG8_EEPROM.JPG)
 
 
 ## Bill of Materials
@@ -62,11 +67,11 @@ Programmer [STLINK](https://www.st.com/en/development-tools/st-link-v2.html).
 
 ### hardware revision 1
 
-![Test Image 6](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/PHOTOS/IMG6_BOARD.JPG)
+![Test Image 6](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/img/IMG6_BOARD.JPG)
 
 ### hardware revision 2
 
-![Test Image 7](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/PHOTOS/IMG7_BOARD_REV2.JPG)
+![Test Image 7](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/img/IMG7_BOARD_REV2.JPG)
 
 ## License
 
