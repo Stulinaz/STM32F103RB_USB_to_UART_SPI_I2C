@@ -2,7 +2,7 @@
 # Stm32 Multiprotocol
 
 > [!IMPORTANT]  
-> Firmware rework scheduled by end of April.
+> Firmware rework scheduled by end of April 2025.
 
 ### Firmware and Kicad project for my USBtoUART/SPI/I2C converter.
 
@@ -85,6 +85,8 @@ Programmer [STLINK](https://www.st.com/en/development-tools/st-link-v2.html)
 ## Contact
 
 ***enrico.stulin@gmail.com***
+
+[LinkedIn](https://www.linkedin.com/in/enrico-stulin-14090b146/)
 
 ## Important Information
 
