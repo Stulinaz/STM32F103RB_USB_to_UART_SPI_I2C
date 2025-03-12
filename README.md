@@ -38,19 +38,19 @@ This board will help you to analyze and debug all the main digital and analog IC
 
 | Component  | Description                      | Part Number              | Digy           |
 |:---------  |:----------                       |:-------                  |:-------        |        
-| USB1       | CONN RCPT USB2.0 MINI SMD R/A    | 0675031020               | WM5461CT-ND    |
-| ESD1       | TVS DIODE 5.25V 17V STO23-6      | USBLC6-2SC6              | 732-1077-1-ND  |
-| ESD2       | TVS DIODE 5V SOT23-6]            | ESDA6V1BC6               | 497-6635-1-ND  |
-| U1         | Linear Voltage Regulator IC      | BSD-3-Clause             | 576-1172-ND    |
-| U2         | ic mcu 32 bit 128kb flash 64LQFP | STM32F103RBT6            | 497-6066-ND    |
-| Y2         | CRYSTAL 16.0000MHZ 4PF SMD       | ABM8W-16.0000MHZ-4-B1U-T3| 535-14020-1-ND |
-| U3         | IC GATE DRVR LOW-SIDE 8SOIC      | MIC4427ZM                | 576-3513-5-ND  |
-| U4         | IC GATE DRVR LOW-SIDE 8SOIC      | M24C64                   | 497-14427-1-ND |     
+| USB1       | CONN RCPT USB2.0 MINI SMD R/A    | 0675031020               | [WM5461CT-ND](https://www.digikey.it/it/products/detail/molex/0675031020/1624424?s=N4IgTCBcDaIOoFkCsAWAbARgMIBUC0AcgCIgC6AvkA)                      |
+| ESD1       | TVS DIODE 5.25V 17V STO23-6      | USBLC6-2SC6              | [497-5235-6-ND](https://www.digikey.it/it/products/detail/stmicroelectronics/USBLC6-2SC6/1040559)                                                   |
+| ESD2       | TVS DIODE 5V SOT23-6]            | ESDA6V1BC6               | [497-6635-1-ND](https://www.digikey.it/it/products/detail/stmicroelectronics/ESDA6V1BC6/1037985?s=N4IgTCBcDaICwE4DsBaAbGgzAVhQRhQDkAREAXQF8g)       |
+| U1         | Linear Voltage Regulator IC      | IC REG 3.3V 1A           | [576-1172-ND](https://www.digikey.it/it/products/detail/microchip-technology/MIC39100-3-3WS/771641?s=N4IgTCBcDaIKwHYBsBaAjGhYUDkAiIAugL5A)          |
+| U2         | ic mcu 32 bit 128kb flash 64LQFP | STM32F103RBT6            | [497-6066-ND](https://www.digikey.it/it/products/detail/stmicroelectronics/STM32F103RBT6/1646341?s=N4IgTCBcDaICwE4DsBaAbABjWlA5AIiALoC%2BQA)        |
+| Y2         | CRYSTAL 16.0000MHZ 4PF SMD       | ABM8W-16.0000MHZ-4-B1U-T3| [535-14020-1-ND](https://www.digikey.it/it/products/detail/abracon-llc/ABM8W-16-0000MHZ-4-B1U-T3/7172791?s=N4IgTCBcDaIKwGY4FoCMAWADGTbkDkAREAXQF8g) |
+| U3         | IC GATE DRVR LOW-SIDE 8SOIC      | MIC4427ZM                | [576-3513-5-ND](https://www.digikey.it/it/products/detail/microchip-technology/MIC4427ZM/1029913?s=N4IgTCBcDaIKwHYBsBaAzHAjGlcUDkAREAXQF8g)         |
+| U4         | IC GATE DRVR LOW-SIDE 8SOIC      | M24C64                   | [497-14427-1-ND](https://www.digikey.it/it/products/detail/stmicroelectronics/M24C64-DRMN3TP-K/4729231?s=N4IgTCBcDaICwE4DsBaAjHOZVpQOQBEQBdAXyA)    |     
 
 ## Software needed for development
 
 - [STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html) **1.17.0**
-- [KICAD](https://www.kicad.org/) **(8.0.5)-2,release build - 64 bit**
+- [KICAD](https://www.kicad.org/) **8.0.5,release build - 64 bit**
 - [GIT](https://git-scm.com/) **2.46.1.windows.1**
 
 ## Tools needed for development
@@ -80,7 +80,7 @@ Programmer [STLINK](https://www.st.com/en/development-tools/st-link-v2.html)
 | CMSIS Device                                 | ARM Limited - STMicroelectronics   | Apache-2.0                                       |
 | STM32WL HAL                                  | STMicroelectronics                 | BSD-3-Clause                                     |
 | FreeRTOS kernel                              | Amazon.com, Inc. or its affiliates | MIT                                              |
-| Stm32 Multiprotocol                          |                                    | BSD-3-Clause                                     |
+| Stm32 Multiprotocol                          | N/A                                | BSD-3-Clause                                     |
 
 ## Contact
 
