@@ -1,9 +1,8 @@
-
 <!-- For .md file development refers to https://docs.github.com/en -->
 # Stm32 Multiprotocol
 
 > [!IMPORTANT]  
-> Firmware rework scheduled by end of april.
+> Firmware rework scheduled by end of April.
 
 ### Firmware and Kicad project for my USBtoUART/SPI/I2C converter.
 
@@ -12,32 +11,28 @@ This project is an embedded software/hardawe solutions that allows you to transf
 This board will help you to analyze and debug all the main digital and analog IC’s as well as lot of IOT and RF demoboard, saving you the time to develop a custom firmware
 , or buying expensive data converters.
 
+## Board Overview
+
+![img004](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/img/img004.png)
+
 ## Top Side of the board
 
-![Test Image 1](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/img/IMG4_TOP.JPG)
+![img000](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/img/img000.png)
 
 ## Bottom Side of The board
 
-![Test Image 2](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/img/IMG1_BOT.JPG)
+![img001](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/img/img001.png)
 
 ## Features 
 
-### SWD Interface
+- SWD Interface.
+- Mini USB Connector with ESD protection.
+- Power mosfet.
+- On board 64k (24C64) eeprom for data storage.
 
-![Test Image 3](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/img/IMG3_SWD.JPG)
+![img002](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/img/img002.png)
 
-###  Mini USB Connector with ESD protection:
-
-![Test Image 4](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/img/IMG5_USB.JPG)
-
-###  Power mosfet
-
-![Test Image 5](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/img/IMG2_MOS.JPG)
-
-### On board 64k (24C64) eeprom for data storage:
-
-![Test Image 8](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/img/IMG8_EEPROM.JPG)
-
+![img003](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/img/img003.png)
 
 ## Bill of Materials
 
@@ -55,23 +50,27 @@ This board will help you to analyze and debug all the main digital and analog IC
 ## Software needed for development
 
 - [STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html) **1.17.0**
-- [KICAD](https://www.kicad.org/) **(5.1.5)-2,release build - 64 bit**
+- [KICAD](https://www.kicad.org/) **(8.0.5)-2,release build - 64 bit**
 - [GIT](https://git-scm.com/) **2.46.1.windows.1**
-- [Tera Term](https://teratermproject.github.io/index-en.html) **5.3 x86**
 
 ## Tools needed for development
 
-Programmer [STLINK](https://www.st.com/en/development-tools/st-link-v2.html).
+Programmer [STLINK](https://www.st.com/en/development-tools/st-link-v2.html)
 
-## My Debug setup
+## Closeup
 
-### hardware revision 1
+![img005](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/img/img005.png)
 
-![Test Image 6](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/img/IMG6_BOARD.JPG)
+![img006](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/img/img006.png)
 
-### hardware revision 2
+![img007](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/img/img007.png)
 
-![Test Image 7](https://github.com/Stulinaz/STM32F103RB_USB_to_UART_SPI_I2C/blob/master/img/IMG7_BOARD_REV2.JPG)
+## Electrical Characteristics
+
+| **Parameter**         | **Min** | **Typ** | **Max** | **Unit** | **Condition/Notes**   |
+|-----------------------|---------|---------|---------|----------|-----------------------|
+| Input Voltage         | 4.5     | 5.0     | 5.5     | V        |                       |
+| Current Consumption   |         | 13      | 20      | mA       |                       |
 
 ## License
 
@@ -81,13 +80,18 @@ Programmer [STLINK](https://www.st.com/en/development-tools/st-link-v2.html).
 | CMSIS Device                                 | ARM Limited - STMicroelectronics   | Apache-2.0                                       |
 | STM32WL HAL                                  | STMicroelectronics                 | BSD-3-Clause                                     |
 | FreeRTOS kernel                              | Amazon.com, Inc. or its affiliates | MIT                                              |
-| USB_to_UART-SPI-I2C                          |                                    | BSD-3-Clause                                     |
+| Stm32 Multiprotocol                          |                                    | BSD-3-Clause                                     |
 
 ## Contact
 
 ***enrico.stulin@gmail.com***
 
+## Important Information
+
 > [!CAUTION]
 > Manual soldering of SMD components requires high level of manual skills.
 > Project not suited for beginners in firmware development.
 > A good understanding of C language is a must.
+
+> [!CAUTION]
+> This project is provided "AS IS" with no warranties. 
