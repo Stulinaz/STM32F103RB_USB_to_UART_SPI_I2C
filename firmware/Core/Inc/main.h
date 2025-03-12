@@ -29,7 +29,6 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f1xx_hal.h"
-#include "pcb_revision.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -88,12 +87,6 @@ void   MX_SPI1_Init(void);
 void   MX_USART2_UART_Init(void);
 void   MX_ADC1_Init(void);
 /* USER CODE BEGIN Private defines */
-#if (PCB_REV == PCB_REV1)
-#define I2C_LED_Pin GPIO_PIN_10
-#define I2C_LED_GPIO_Port GPIOB
-#define USB_LED_Pin GPIO_PIN_11
-#define USB_LED_GPIO_Port GPIOB
-#elif (PCB_REV == PCB_REV2)
 #define EEPROM_IIC_SDA_PIN  GPIO_PIN_11
 #define EEPROM_IIC_SDA_PORT GPIOB
 #define EEPROM_IIC_SCL_PIN  GPIO_PIN_10
@@ -102,21 +95,14 @@ void   MX_ADC1_Init(void);
 #define I2C_LED_GPIO_Port GPIOB
 #define USB_LED_Pin GPIO_PIN_13
 #define USB_LED_GPIO_Port GPIOB
-#else
-#error "PCB revision must be defined in the file <pcb_revision.h>"
-#endif
 #define UART_TX_PIN GPIO_PIN_2
 #define UART_TX_PORT GPIOA
-
 #define UART_RX_PIN GPIO_PIN_3
 #define UART_RX_PORT GPIOA
-
 #define UART_CTS_PIN GPIO_PIN_0
 #define UART_CTS_PORT GPIOA
-
 #define UART_RTS_PIN GPIO_PIN_1
 #define UART_RTS_PORT GPIOA
-
 #define SPI_PORT GPIOA
 #define SPI_NSS_PIN GPIO_PIN_4
 #define SPI_MISO_PIN GPIO_PIN_6

@@ -136,11 +136,11 @@ g_pfnVectors:
   .word 0
   .word 0
   .word 0
-  .word SVC_Handler
+  .word vPortSVCHandler//SVC_Handler
   .word DebugMon_Handler
   .word 0
-  .word PendSV_Handler
-  .word SysTick_Handler
+  .word xPortPendSVHandler//PendSV_Handler
+  .word xPortSysTickHandler//SysTick_Handler
   .word WWDG_IRQHandler
   .word PVD_IRQHandler
   .word TAMPER_IRQHandler
